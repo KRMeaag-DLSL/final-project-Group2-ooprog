@@ -3,6 +3,9 @@
         "*.cs": "csharp",
         "format": "cpp",
         "vector": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "string": "cpp",
+        "xstring": "cpp",
+        "iosfwd": "cpp"
     }
 }
