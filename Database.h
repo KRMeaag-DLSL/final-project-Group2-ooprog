@@ -1,33 +1,33 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <sstream>
-#include <stdlib.h>
 
 using namespace std;
 
 class StudentEntry {
     private:
-        string studentID;
+        int studentID;
         string name;
         int age;
-        int contact;
+        string contact;
         string address;
         string emailAddress;
         string department;
     public:
-        StudentEntry(string id, string name, int age, int contact, string address, string emailAddress, string department) :
+        StudentEntry(int id, string name, int age, string contact, string address, string emailAddress, string department) :
          studentID(id), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
 
-        string getStudentID() { return studentID;}
-        void setStudentID(string id) {studentID = id;}
-        string getName() { return name;}
+        int getStudentID() { return studentID;}
+        void setStudentID(int id) {studentID = id;}
+        string getName() const { return name;}
         void setName(string n) { name = n;}
         int getAge() { return age;}
         void setAge(int a) { age = a;}
-        int getContact() { return contact;}
-        void setContact(int c) { contact = c;}
+        string getContact() { return contact;}
+        void setContact(string c) { contact = c;}
         string getAddress() { return address;}
         void setAddress(int a) { address = a;}
         string getEmailAddress() { return emailAddress;}
@@ -38,37 +38,107 @@ class StudentEntry {
 
 class Record {
     private:
-        string studentID;
+        int studentID;
+        string offence;
+        int severity;
+        string date;
     public:
-        string getStudentID() { return studentID;}
+        Record(int id, string of, int s, string d) : studentID(id), offence(of), severity(s), date(d) {}
+        int getStudentID() { return studentID;}
+        string getOffence() { return offence;}
+        int getSeverity() { return severity;}
+        string getDate() { return date;}
+        void setStudentID(int id) { studentID = id;}
+        void setOffence(string of) { offence = of;}
+        void setSeverity(int s) { severity = s;}
+        void setDate(string d) { date = d;}
 };
 
 class Deadline {
     private:
-        string studentID;
+        int studentID;
+        string name;
+        int daysUntilDeadlines;
+        string deadlineDate;
+        string subject;
     public:
-        string getStudentID() { return studentID;}
+        Deadline(int id, string n, int dUD, string dLD, string s) 
+        : studentID(id), name(n), daysUntilDeadlines(dUD), deadlineDate(dLD), subject(s) {}
+        int getStudentID() { return studentID;}
+        string getName() { return name;}
+        int getDaysUntilDeadlines() { return daysUntilDeadlines;}
+        string getDeadlineDate() { return deadlineDate;}
+        string getSubject() { return subject;}
+        void setStudentID(int id) {studentID = id;}
+        void setName(string n) {name = n;}
+        void setDaysUntilDeadlines(int dUD) {daysUntilDeadlines = dUD;}
+        void setDeadlineDate(string dLD) {deadlineDate = dLD;}
+        void setSubject(string s) {subject = s;}
 };
 
 class Grade {
     private:
         string studentID;
+        double english;
+        double math;
+        double science;
+        double socStud;
+        double filipino;
+        double tle;
+        double clce;
+        double mapeh;
     public:
+        Grade(string id, double e, double m, double s, double sS, double f, double t, double c, double mapeh) 
+        : studentID(id), english(e), math(m), science(s), socStud(sS), filipino(f), tle(t), clce(c), mapeh(mapeh) {}
         string getStudentID() { return studentID;}
-};
-
-class Attendance {
-    private:
-        string studentID;
-    public:
-        string getStudentID() { return studentID;}
+        double getEnglish() { return english;}
+        double getMath(){ return math;}
+        double getScience(){ return science;}
+        double getSocStud(){ return socStud;}
+        double getFilipino(){ return filipino;}
+        double getTLE(){ return tle;}
+        double getCLCE(){ return clce;}
+        double getMAPEH(){ return mapeh;}
+        void setEnglish(double e){ english = e;}
+        void setMath(double m){ math = m;}
+        void setScience(double s){ science = s;}
+        void setSocStud(double sS){ socStud = sS;}
+        void setFilipino(double f){ filipino = f;}
+        void setTLE(double t){ tle = t;}
+        void setCLCE(double c){ clce = c;}
+        void setMAPEH(double m){ mapeh = m;}
 };
 
 class FinancialCommitment {
     private:
-        string studentID;
+        int studentID;
+        int totalTuitionFee;
+        int additionalFees;
+        int paidAmount;
+        string paymentDeadline;
     public:
-        string getStudentID() { return studentID;}
+        FinancialCommitment(int id, int ttf, int af, int pa, string pd) 
+        : studentID(id), totalTuitionFee(ttf), additionalFees(af), paidAmount(pa), paymentDeadline(pd) {}
+        int getStudentID() { return studentID;}
+        int getTotalTuitionFee() { return totalTuitionFee;}
+        int getAdditionalFees() { return additionalFees;}
+        int getPaidAmount() { return paidAmount;}
+        string getPaymentDeadline() { return paymentDeadline;}
+};
+
+class Attendance {
+    private:
+        int studentID;
+        int absents;
+        int lates;
+    public:
+        Attendance(int id, int a, int l) : studentID(id), absents(a), lates(l) {}
+        int getStudentID() { return studentID;}
+        int getAbsents() { return absents;}
+        int getLates() { return lates;}
+        void setStudentID(int id) { studentID = id;}
+        void setAbsents(int a) { absents = a;}
+        void setLates(int l) { lates = l;}
 };
 
 class Database {
@@ -81,7 +151,7 @@ class Database {
         vector<Attendance> attendance;
         vector<FinancialCommitment> financialCommitments;
 
-        Database () {}
+        Database () { loadData();}
     
     public:
         static Database* getInstance() {
@@ -89,51 +159,55 @@ class Database {
         }
 
         void searchEntry(string studentID) {}
-        vector<StudentEntry> getStudentEntries() { return studentEntries;}
-        vector<Record> getRecords() { return records;}
-        vector<Grade> getGrades() { return grades;}
-        vector<Deadline> getDeadlines() { return deadlines;}
-        vector<Attendance> getAttendance() { return attendance;}
-        vector<FinancialCommitment> getFinancialCommitments() { return financialCommitments;}
+        vector<StudentEntry>& getStudentEntries() { return studentEntries;}
+        vector<Record>& getRecords() { return records;}
+        vector<Grade>& getGrades() { return grades;}
+        vector<Deadline>& getDeadlines() { return deadlines;}
+        vector<Attendance>& getAttendance() { return attendance;}
+        vector<FinancialCommitment>& getFinancialCommitments() { return financialCommitments;}
+
+        void getRowFromFile(ifstream& fin, vector<string>& row, string line, string word) {
+            row.clear();
+            stringstream s(line);
+
+            while (getline(s, word, ',')) {
+                row.push_back(word);
+            }
+
+            // Debug: Check the parsed row
+            cout << "Parsed row: ";
+            for (const auto& col : row) {
+                cout << "[" << col << "] ";
+            }
+            cout << endl;
+        }
 
         void loadData() {
-            ifstream fin;
-            fin.open("MA2_Student-Entry-DB.csv", ios::in);
+            ifstream fin("MA2_Student-Entry-DB.csv", ios::in);
+
+            if (!fin.is_open()) {
+                cerr << "Error: Unable to open file!" << endl;
+                return;
+            }
 
             vector<string> row;
-            string line, word, temp;
+            string line, word;
 
-            while(!fin.eof()) {
-                row.clear();
+            // Skip the header
+            getline(fin, line);
 
-                // read an entire row and
-                // store it in a string variable 'line'
-                getline(fin, line);
+            while (getline(fin, line)) {
+                getRowFromFile(fin, row, line, word);
 
-                if (line.rfind("Student-ID", 0) == 0) continue;
+                // Convert age to integer
+                int id = stoul(row[0]);
+                int age = stoi(row[2]);
 
-                // used for breaking words
-                stringstream s(line);
-
-                // read every column data of a row and
-                // store it in a string variable, 'word'
-                while (getline(s, word, ','))
-                {
-                    // add all the column data
-                    // of a row to a vector
-                    row.push_back(word);
-                }
-
-                stringstream strm(row[2]);
-                stringstream strm2(row[3]);
-                int age, contact;
-                strm >> age;
-                strm2 >> contact;
-
-                StudentEntry entry(row[0], row[1], age, contact, row[4], row[5], row[6]);
-
-                cout << entry.getStudentID() << endl;
-                studentEntries.push_back(entry);
+                // Add entry to the vector
+                studentEntries.push_back(StudentEntry(id, row[1], age, row[3], row[4], row[5], row[6]));
             }
+            fin.close();
+
+            cout << "Total student entries loaded: " << studentEntries.size() << endl;
         }
 };
