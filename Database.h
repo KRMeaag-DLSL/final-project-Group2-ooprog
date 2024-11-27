@@ -4,13 +4,12 @@
 #include <vector>
 #include <string>
 #include <sstream>
-#include <stdlib.h>
 
 using namespace std;
 
 class StudentEntry {
     private:
-        unsigned long long studentID;
+        int studentID;
         string name;
         int age;
         string contact;
@@ -18,11 +17,11 @@ class StudentEntry {
         string emailAddress;
         string department;
     public:
-        StudentEntry(unsigned long long id, string name, int age, string contact, string address, string emailAddress, string department) :
+        StudentEntry(int id, string name, int age, string contact, string address, string emailAddress, string department) :
          studentID(id), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
 
-        unsigned long long getStudentID() { return studentID;}
-        void setStudentID(unsigned long long id) {studentID = id;}
+        int getStudentID() { return studentID;}
+        void setStudentID(int id) {studentID = id;}
         string getName() const { return name;}
         void setName(string n) { name = n;}
         int getAge() { return age;}
@@ -39,37 +38,107 @@ class StudentEntry {
 
 class Record {
     private:
-        string studentID;
+        int studentID;
+        string offence;
+        int severity;
+        string date;
     public:
-        string getStudentID() { return studentID;}
+        Record(int id, string of, int s, string d) : studentID(id), offence(of), severity(s), date(d) {}
+        int getStudentID() { return studentID;}
+        string getOffence() { return offence;}
+        int getSeverity() { return severity;}
+        string getDate() { return date;}
+        void setStudentID(int id) { studentID = id;}
+        void setOffence(string of) { offence = of;}
+        void setSeverity(int s) { severity = s;}
+        void setDate(string d) { date = d;}
 };
 
 class Deadline {
     private:
-        string studentID;
+        int studentID;
+        string name;
+        int daysUntilDeadlines;
+        string deadlineDate;
+        string subject;
     public:
-        string getStudentID() { return studentID;}
+        Deadline(int id, string n, int dUD, string dLD, string s) 
+        : studentID(id), name(n), daysUntilDeadlines(dUD), deadlineDate(dLD), subject(s) {}
+        int getStudentID() { return studentID;}
+        string getName() { return name;}
+        int getDaysUntilDeadlines() { return daysUntilDeadlines;}
+        string getDeadlineDate() { return deadlineDate;}
+        string getSubject() { return subject;}
+        void setStudentID(int id) {studentID = id;}
+        void setName(string n) {name = n;}
+        void setDaysUntilDeadlines(int dUD) {daysUntilDeadlines = dUD;}
+        void setDeadlineDate(string dLD) {deadlineDate = dLD;}
+        void setSubject(string s) {subject = s;}
 };
 
 class Grade {
     private:
         string studentID;
+        double english;
+        double math;
+        double science;
+        double socStud;
+        double filipino;
+        double tle;
+        double clce;
+        double mapeh;
     public:
+        Grade(string id, double e, double m, double s, double sS, double f, double t, double c, double mapeh) 
+        : studentID(id), english(e), math(m), science(s), socStud(sS), filipino(f), tle(t), clce(c), mapeh(mapeh) {}
         string getStudentID() { return studentID;}
-};
-
-class Attendance {
-    private:
-        string studentID;
-    public:
-        string getStudentID() { return studentID;}
+        double getEnglish() { return english;}
+        double getMath(){ return math;}
+        double getScience(){ return science;}
+        double getSocStud(){ return socStud;}
+        double getFilipino(){ return filipino;}
+        double getTLE(){ return tle;}
+        double getCLCE(){ return clce;}
+        double getMAPEH(){ return mapeh;}
+        void setEnglish(double e){ english = e;}
+        void setMath(double m){ math = m;}
+        void setScience(double s){ science = s;}
+        void setSocStud(double sS){ socStud = sS;}
+        void setFilipino(double f){ filipino = f;}
+        void setTLE(double t){ tle = t;}
+        void setCLCE(double c){ clce = c;}
+        void setMAPEH(double m){ mapeh = m;}
 };
 
 class FinancialCommitment {
     private:
-        string studentID;
+        int studentID;
+        int totalTuitionFee;
+        int additionalFees;
+        int paidAmount;
+        string paymentDeadline;
     public:
-        string getStudentID() { return studentID;}
+        FinancialCommitment(int id, int ttf, int af, int pa, string pd) 
+        : studentID(id), totalTuitionFee(ttf), additionalFees(af), paidAmount(pa), paymentDeadline(pd) {}
+        int getStudentID() { return studentID;}
+        int getTotalTuitionFee() { return totalTuitionFee;}
+        int getAdditionalFees() { return additionalFees;}
+        int getPaidAmount() { return paidAmount;}
+        string getPaymentDeadline() { return paymentDeadline;}
+};
+
+class Attendance {
+    private:
+        int studentID;
+        int absents;
+        int lates;
+    public:
+        Attendance(int id, int a, int l) : studentID(id), absents(a), lates(l) {}
+        int getStudentID() { return studentID;}
+        int getAbsents() { return absents;}
+        int getLates() { return lates;}
+        void setStudentID(int id) { studentID = id;}
+        void setAbsents(int a) { absents = a;}
+        void setLates(int l) { lates = l;}
 };
 
 class Database {
