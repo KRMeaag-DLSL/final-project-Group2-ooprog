@@ -74,7 +74,7 @@ class FinancialCommitment {
 class Database {
     private:
         static Database* instance;
-        vector<StudentEntry*> studentEntries;
+        vector<StudentEntry> studentEntries;
         vector<Record> records;
         vector<Grade> grades;
         vector<Deadline> deadlines;
@@ -89,7 +89,7 @@ class Database {
         }
 
         void searchEntry(string studentID) {}
-        vector<StudentEntry*>& getStudentEntries() { return studentEntries;}
+        vector<StudentEntry> getStudentEntries() { return studentEntries;}
         vector<Record> getRecords() { return records;}
         vector<Grade> getGrades() { return grades;}
         vector<Deadline> getDeadlines() { return deadlines;}
@@ -130,11 +130,10 @@ class Database {
                 strm >> age;
                 strm2 >> contact;
 
-
-                //cout << row[0] << " " << row[1] << row[2] << " " << row[3] << row[4] << " " << row[5] << " " << row[6];
-
                 StudentEntry entry(row[0], row[1], age, contact, row[4], row[5], row[6]);
-                getStudentEntries().push_back(&entry);
+
+                cout << entry.getStudentID() << endl;
+                studentEntries.push_back(entry);
             }
         }
 };

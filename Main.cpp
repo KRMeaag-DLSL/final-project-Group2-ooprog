@@ -11,9 +11,9 @@ Database* Database::instance = nullptr;
 
 int main() {
     Database::getInstance()->loadData();
-    cout << Database::getInstance()->getStudentEntries().size();
+    cout << Database::getInstance()->getStudentEntries().size() << endl;
     for (auto& id : Database::getInstance()->getStudentEntries()) {
-        cout << id->getName() << endl;
+        cout << id.getName() << endl;
     }
     return 0;
 }
