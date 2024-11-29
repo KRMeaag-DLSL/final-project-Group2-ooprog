@@ -3,7 +3,6 @@
 #include <string>
 #include <sstream>
 
-
 using namespace std;
 
 class Account {
@@ -47,4 +46,6 @@ class Account {
         }
 
         void logout() {}
+
+        virtual void menu() = 0;
 };
