@@ -167,6 +167,13 @@ class Database {
             cout << "Total grades loaded: " << grades.size() << endl;
             cout << "Total commitments loaded: " << financialCommitments.size() << endl;
             cout << "Total attendance loaded: " << attendance.size() << endl;
+            
+            saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            saveData("MA2_Records-DB - Sheet1.csv", 2);
+            saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
+            saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
+            saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
+            saveData("MA2_Attendance-DB - Sheet1.csv", 6);
         }
     
     public:
@@ -247,13 +254,83 @@ class Database {
                         break;
                     }
                     case 6: {
-                        int absents;
-                        int lates; 
+                        int absents = stoi(row[1]);
+                        int lates = stoi(row[2]); 
                         attendance.push_back(Attendance(id, absents, lates));
                         break;
                     }
                 }
             }
             fin.close();
+        }
+
+        void saveData(string fileName, int type) {
+            // File pointer
+            fstream fin, fout;
+
+            // Open an existing record
+            fin.open(fileName, ios::in);
+
+            // Create a new file to store updated data
+            fout.open("new.csv", ios::out);
+
+            switch(type) {
+                case 1: {
+                    fout << "Student-ID,Name,Age,Contact,Address,Email Address,Department\n";
+                    for (auto& student : studentEntries) {
+                        fout << student.getStudentID() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
+                        << "," << student.getAddress() << "," << student.getEmailAddress() << "," << student.getDepartment() << "\n";
+                    }
+                    break;
+                }
+                case 2: {
+                    fout << "Student-ID,Offense,Severity,Date\n";
+                    for (auto& record : records) {
+                        fout << record.getStudentID() << "," << record.getOffence() << "," << record.getSeverity() << "," << record.getDate()
+                        << "\n";
+                    }
+                    break;
+                }
+                case 3: {
+                    fout << "Student-ID,Name,Days until the Deadline,Deadline Date,Subject\n";
+                    for (auto& deadline : deadlines) {
+                        fout << deadline.getStudentID() << "," << deadline.getName() << "," << deadline.getDaysUntilDeadlines() << "," <<
+                        deadline.getDeadlineDate() << "," << deadline.getSubject() << "\n";
+                    }
+                    break;
+                }
+                case 4: {
+                    fout << "Student-ID,English,Science,Mathematics,Filipino,Social Studies,CLCE ,TLE,MAPEH\n";
+                    for (auto& grade : grades) {
+                        fout << grade.getStudentID() << "," << grade.getEnglish() << "," << grade.getScience() << "," << grade.getMath()
+                        << "," << grade.getFilipino() << "," << grade.getSocStud() << "," << grade.getCLCE() << "," << grade.getTLE()
+                        << "," << grade.getMAPEH() << "\n";
+                    }
+                    break;
+                }
+                case 5: {
+                    fout << "Student-ID,Total-Tuition-Fee,Additional-Fees,Paid-Amount,Payment-Deadline\n";
+                    for (auto& commitment : financialCommitments) {
+                        fout << commitment.getStudentID() << "," << commitment.getTotalTuitionFee() << "," << commitment.getAdditionalFees()
+                        << "," << commitment.getPaidAmount() << "," << commitment.getPaymentDeadline() << "\n";
+                    }
+                    break;
+                }
+                case 6: {
+                    fout << "Student-ID,Absents,Lates\n";
+                    for (auto& attendance : attendance) {
+                        fout << attendance.getStudentID() << "," << attendance.getAbsents() << "," << attendance.getLates() << "\n";
+                    }
+                    break;
+                }
+            }
+            fin.close();
+            fout.close();
+            
+            // removing the existing file
+            remove(fileName.c_str());
+
+            // renaming the updated file with the existing file name
+            rename("new.csv", fileName.c_str());
         }
 };
