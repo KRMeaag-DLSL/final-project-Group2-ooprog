@@ -78,7 +78,7 @@ class Deadline {
 
 class Grade {
     private:
-        string studentID;
+        int studentID;
         double english;
         double math;
         double science;
@@ -88,9 +88,9 @@ class Grade {
         double clce;
         double mapeh;
     public:
-        Grade(string id, double e, double m, double s, double sS, double f, double t, double c, double mapeh) 
+        Grade(int id, double e, double m, double s, double sS, double f, double t, double c, double mapeh) 
         : studentID(id), english(e), math(m), science(s), socStud(sS), filipino(f), tle(t), clce(c), mapeh(mapeh) {}
-        string getStudentID() { return studentID;}
+        int getStudentID() { return studentID;}
         double getEnglish() { return english;}
         double getMath(){ return math;}
         double getScience(){ return science;}
@@ -99,6 +99,7 @@ class Grade {
         double getTLE(){ return tle;}
         double getCLCE(){ return clce;}
         double getMAPEH(){ return mapeh;}
+        void setStudentID(int id) {studentID = id;}
         void setEnglish(double e){ english = e;}
         void setMath(double m){ math = m;}
         void setScience(double s){ science = s;}
@@ -151,7 +152,22 @@ class Database {
         vector<Attendance> attendance;
         vector<FinancialCommitment> financialCommitments;
 
-        Database () { loadData();}
+        Database () { 
+            loadData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            loadData("MA2_Records-DB - Sheet1.csv", 2);
+            loadData("MA2_Deadlines-DB - Sheet1.csv", 3);
+            loadData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
+            loadData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
+            loadData("MA2_Attendance-DB - Sheet1.csv", 6);
+
+            // delete this shit
+            cout << "Total student entries loaded: " << studentEntries.size() << endl;
+            cout << "Total records loaded: " << records.size() << endl;
+            cout << "Total deadlines loaded: " << deadlines.size() << endl;
+            cout << "Total grades loaded: " << grades.size() << endl;
+            cout << "Total commitments loaded: " << financialCommitments.size() << endl;
+            cout << "Total attendance loaded: " << attendance.size() << endl;
+        }
     
     public:
         static Database* getInstance() {
@@ -174,16 +190,10 @@ class Database {
                 row.push_back(word);
             }
 
-            // Debug: Check the parsed row
-            cout << "Parsed row: ";
-            for (const auto& col : row) {
-                cout << "[" << col << "] ";
-            }
-            cout << endl;
         }
 
-        void loadData() {
-            ifstream fin("MA2_Student-Entry-DB.csv", ios::in);
+        void loadData(string fileName, int type) {
+            ifstream fin(fileName, ios::in);
 
             if (!fin.is_open()) {
                 cerr << "Error: Unable to open file!" << endl;
@@ -199,15 +209,51 @@ class Database {
             while (getline(fin, line)) {
                 getRowFromFile(fin, row, line, word);
 
-                // Convert age to integer
-                int id = stoul(row[0]);
-                int age = stoi(row[2]);
-
+                int id = stoi(row[0]);
                 // Add entry to the vector
-                studentEntries.push_back(StudentEntry(id, row[1], age, row[3], row[4], row[5], row[6]));
+                switch (type) {
+                    case 1: {
+                        int age = stoi(row[2]);
+                        studentEntries.push_back(StudentEntry(id, row[1], age, row[3], row[4], row[5], row[6]));
+                        break;
+                    }
+                    case 2: {
+                        int severity = stoi(row[2]);
+                        records.push_back(Record(id, row[1], severity, row[3]));
+                        break;
+                    }
+                    case 3: {
+                        int daysUntilDeadline =  stoi(row[2]);
+                        deadlines.push_back(Deadline(id, row[1], daysUntilDeadline, row[3], row[4]));
+                        break;
+                    }
+                    case 4: {
+                        double english = stod(row[1]);
+                        double math = stod(row[2]);
+                        double science = stod(row[3]);
+                        double socStud = stod(row[4]);
+                        double filipino = stod(row[5]);
+                        double tle = stod(row[6]);
+                        double clce = stod(row[7]);
+                        double mapeh = stod(row[8]);
+                        grades.push_back(Grade(id, english, math, science, socStud, filipino, tle, clce, mapeh));
+                        break;
+                    }
+                    case 5: {
+                        int totalTuitionFee = stod(row[1]);
+                        int additionalFees = stod(row[2]);
+                        int paidAmount = stod(row[3]);
+                        financialCommitments.push_back(FinancialCommitment(id, totalTuitionFee, additionalFees, paidAmount, row[4]));
+                        break;
+                    }
+                    case 6: {
+                        int absents;
+                        int lates; 
+                        attendance.push_back(Attendance(id, absents, lates));
+                        break;
+                    }
+                }
             }
             fin.close();
-
-            cout << "Total student entries loaded: " << studentEntries.size() << endl;
         }
 };
