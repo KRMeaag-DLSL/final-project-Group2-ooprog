@@ -10,7 +10,8 @@ using namespace std;
 Database* Database::instance = nullptr;
 
 int main() {
-    Database::getInstance();
+    Database::getInstance()->getGrades();
+    cout << "Test Conflict";
     
     return 0;
 }
