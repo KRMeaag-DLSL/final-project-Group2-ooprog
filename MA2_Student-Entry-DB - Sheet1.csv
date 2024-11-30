@@ -1,16 +1,16 @@
-Student-ID,Name,Age,Contact ,Address,Email Address,Department
-2022515689,Alice Johnson,20,123-456-7890,"123 Elm St, Springfield",alice.johnson@email.com,SHS
-2022394915,Ben Carter,22,987-654-3210,"456 Oak Rd, Riverdale",ben.carter@email.com,JHS
-2020394453,Clara Smith,19,555-123-4567,"789 Pine Ave, Maple City",clara.smith@email.com,GS
-2024178625,Daniel Brown,21,444-987-1234,"101 Birch Ln, Hillside",daniel.brown@email.com,SHS
-2017566690,Emily Davis,20,333-456-7890,"202 Cedar St, Lakeview",emily.davis@email.com,JHS
-2020476627,Frank Wilson,23,222-789-4561,"303 Maple Dr, Brookfield",frank.wilson@email.com,GS
-2018650514,Grace Lee,18,111-654-9872,"404 Walnut Way, Fairmont",grace.lee@email.com,JHS
-2024627458,Henry Thomas,21,999-321-6540,"505 Ash St, Clearwater",henry.thomas@email.com,SHS
-2024120883,Ivy Martinez,19,888-432-1098,"606 Cypress Rd, Belmont",ivy.martinez@email.com,GS
-2021253392,Jack Robinson,22,777-890-1234,"707 Spruce Blvd, Greendale",jack.robinson@email.com,JHS
-2022866480,Kelly Anderson,20,123-678-4321,"808 Willow St, Bayside",kelly.anderson@email.com,SHS
-2017352377,Leo Turner,22,876-543-2190,"909 Chestnut Ln, Greenhill",leo.turner@email.com,JHS
-2021529203,Mia Perez,19,567-890-1234,"1010 Magnolia Ave, Pinewood",mia.perez@email.com,GS
-2024129253,Noah Harris,21,432-109-8765,"1111 Aspen Dr, Stonebridge",noah.harris@email.com,SHS
-2017639860,Olivia White,20,654-321-0987,"1212 Dogwood Way, Rivertown",olivia.white@email.com,GS
+Student-ID,Name,Age,Contact,Address,Email Address,Department
+2022515689,Alice Johnson,20,123-456-7890,"123 Elm St, Springfield",alice.johnson@email.com
+2022394915,Ben Carter,22,987-654-3210,"456 Oak Rd, Riverdale",ben.carter@email.com
+2020394453,Clara Smith,19,555-123-4567,"789 Pine Ave, Maple City",clara.smith@email.com
+2024178625,Daniel Brown,21,444-987-1234,"101 Birch Ln, Hillside",daniel.brown@email.com
+2017566690,Emily Davis,20,333-456-7890,"202 Cedar St, Lakeview",emily.davis@email.com
+2020476627,Frank Wilson,23,222-789-4561,"303 Maple Dr, Brookfield",frank.wilson@email.com
+2018650514,Grace Lee,18,111-654-9872,"404 Walnut Way, Fairmont",grace.lee@email.com
+2024627458,Henry Thomas,21,999-321-6540,"505 Ash St, Clearwater",henry.thomas@email.com
+2024120883,Ivy Martinez,19,888-432-1098,"606 Cypress Rd, Belmont",ivy.martinez@email.com
+2021253392,Jack Robinson,22,777-890-1234,"707 Spruce Blvd, Greendale",jack.robinson@email.com
+2022866480,Kelly Anderson,20,123-678-4321,"808 Willow St, Bayside",kelly.anderson@email.com
+2017352377,Leo Turner,22,876-543-2190,"909 Chestnut Ln, Greenhill",leo.turner@email.com
+2021529203,Mia Perez,19,567-890-1234,"1010 Magnolia Ave, Pinewood",mia.perez@email.com
+2024129253,Noah Harris,21,432-109-8765,"1111 Aspen Dr, Stonebridge",noah.harris@email.com
+2017639860,Olivia White,20,654-321-0987,"1212 Dogwood Way, Rivertown",olivia.white@email.com
