@@ -118,7 +118,7 @@ class Faculty : public Account {
         void updateGrades() {
             Database* db = Database::getInstance();
             vector<Grade>& grades = db->getGrades();
-            string subjects[] = {
+            const string subjects[] = {
                 "English",
                 "Science",
                 "Mathematics",
@@ -134,19 +134,18 @@ class Faculty : public Account {
             int subjectIndex;
             double newGrade;
             
+            clearScreen();
             cout << "Which student's grades would you want to update?" << endl;
             cout << "Type student number here: ";
             searchID = inputStudentID();
-            
 
             // Input Error
             if (searchID == -1) {
-                continueToNext();
                 return;
             }
 
             // Search for Student in Database
-            for (int i = 0; grades.size(); i++) {
+            for (int i = 0; i < grades.size(); i++) {
                 if (grades[i].getStudentID() == searchID) {
                     keyDatabase = i;
                 }
@@ -167,43 +166,50 @@ class Faculty : public Account {
             }
 
             // Assign New Grade
-
             cout << "\nInput new grade: ";
-            inputNum(&newGrade);
 
+            // Checks for error before changing grade
+            if (!inputNum(&newGrade)) {
+                return;
+            }
+
+            // Assigns new grade based on teacher's subject
             switch (subjectIndex) {
                 case 0: // English
                     grades[keyDatabase].setEnglish(newGrade);
                     break;
 
                 case 1: // Science
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setScience(newGrade);
                     break;
 
                 case 2: // Mathematics
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setMath(newGrade);
                     break;
 
                 case 3: // Filipino
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setFilipino(newGrade);
                     break;
 
                 case 4: // Social Studies
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setSocStud(newGrade);
                     break;
 
                 case 5: // CLCE
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setCLCE(newGrade);
                     break;
 
                 case 6: // TLE
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setTLE(newGrade);
                     break;
 
                 case 7: // MAPEH
-                    grades[keyDatabase].setEnglish(newGrade);
+                    grades[keyDatabase].setMAPEH(newGrade);
                     break;
             }
+
+            // Saves data
+            db->saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
         }
 
         void updateAttendance() {
@@ -228,10 +234,10 @@ class Faculty : public Account {
                     case -1:
                         continue;
                     case 1:
-                        deadlineSubMenu();
+                        updateGrades();
                         break;
                     case 2:
-                        updateStudentPerformance();
+                        updateAttendance();
                         break;
                     case 3:
                         return;

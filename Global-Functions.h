@@ -28,13 +28,13 @@ inline int inputMenu(int maxOption) {
     try {
         cin >> strInput;
         if (!isdigit(strInput[0])) {
-            throw string("Input is either a negative or not an integer, please try again!");
+            throw string("\nInput is either a negative or not an integer, please try again!");
         }
         else if (strInput.length() != 1) {
-            throw string("Input is invalid, please try again!");
+            throw string("\nInput is invalid, please try again!");
         }
         else if (atoi(&strInput[0]) < 1 || atoi(&strInput[0]) > maxOption) {
-            throw string("Input is not within the range of options, please try again!");
+            throw string("\nInput is not within the range of options, please try again!");
         }
         else {
             return atoi(&strInput[0]);
@@ -44,7 +44,7 @@ inline int inputMenu(int maxOption) {
         continueToNext();
         return -1;
     } catch (...) {
-        cout << "Unknown exception error occured. Please try again!" << endl;
+        cout << "\nUnknown exception error occured. Please try again!" << endl;
         continueToNext();
         return -1;
     }
@@ -52,7 +52,7 @@ inline int inputMenu(int maxOption) {
     return 0;
 }
 
-inline bool checkStrDigit(const string input) {
+inline bool checkStrDigit(string input) {
     for (int i = 0; i < input.length(); i++) {
         if (!isdigit(input[i])) {
             return false;
@@ -67,12 +67,12 @@ inline int inputStudentID() {
     string strInput;
     try {
         cin >> strInput;
-        if (checkStrDigit(strInput)) {
-            throw string("Input is not an integer, please try again!");
+        if (!checkStrDigit(strInput)) {
+            throw string("\nInput is not an integer, please try again!");
         } else if (strInput.length() != 10) {
-            throw string("Input is not a student ID, please try again!");
+            throw string("\nInput is not a student ID, please try again!");
         } else if (stoi(strInput) < 0) {
-            throw string("Input is a negative number, please try again!");
+            throw string("\nInput is a negative number, please try again!");
         } else {
             return stoi(strInput);
         }
@@ -81,7 +81,7 @@ inline int inputStudentID() {
         continueToNext();
         return -1;
     } catch (...) {
-        cout << "Unknown exception error occured. Please try again!" << endl;
+        cout << "\nUnknown exception error occured. Please try again!" << endl;
         continueToNext();
         return -1;
     }
@@ -94,10 +94,10 @@ inline bool inputNum(double* num) {
     string numStr;
     try {
         cin >> numStr;
-        if (checkStrDigit(numStr)) {
-            throw string("Input is not an integer, please try again!");
+        if (!checkStrDigit(numStr)) {
+            throw string("\nInput is not an integer, please try again!");
         } else if (stoi(numStr) < 0) {
-            throw string("Input is a negative number, please try again!");
+            throw string("\nInput is a negative number, please try again!");
         } else {
             *num = stoi(numStr);
             return true;
@@ -107,7 +107,7 @@ inline bool inputNum(double* num) {
         continueToNext();
         return false;
     } catch (...) {
-        cout << "Unknown exception error occured. Please try again!" << endl;
+        cout << "\nUnknown exception error occured. Please try again!" << endl;
         continueToNext();
         return false;
     }
