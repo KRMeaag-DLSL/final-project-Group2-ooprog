@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "Global-Functions.h"
 
 using namespace std;
 
@@ -12,41 +13,55 @@ class Account {
         string password;
 
     public:
-        int login() {
+        int login(int* accountType, string* accountID) {
             string line;
-            cout << "Username: ";
+            cout << "\nUsername: ";
             cin >> username;
             cout << "Password: ";
             cin >> password;
 
             ifstream fin;
-            fin.open("MA2_Accounts-Information-DB.csv", ios::in);
+            fin.open("MA2_Accounts-Information-DB - Sheet1.csv", ios::in);
 
             if (!fin.is_open()) {
                 cerr << "Error! Unable to open account information file" << endl;
-                return 1;
+                return 1; // Error - File I/O is not working
             }
 
             getline(fin,line);
 
             while(getline(fin, line)) {
-                string checkUser, checkPassword;
+                string checkUser, checkPassword, userType;
                 stringstream s(line);
 
                 getline(s,checkUser, ',');
                 getline(s,checkPassword, ',');
+                getline(s,userType, ',');
 
                 if (username == checkUser && password == checkPassword) {
                     cout << "Login successful!" << endl;
-                    return 0;
+
+                    if (userType == "Admin") {
+                        *accountType = 0; // User Type 0 Means Admin
+                    } else if (userType == "Faculty") {
+                        *accountType = 1; // User Type 1 Means Faculty
+                    } else if (userType == "Student") {
+                        *accountType = 2; // User Type 2 Means Student
+                    }
+
+                    *accountID = checkUser;
+
+                    return 0; // No errors
                 }
             }
 
-            cout << "Login failed. Please check your username and password." << endl;
-            return 2;
+            clearScreen();
+            cout << "\nLogin failed. Please check your username and password." << endl;
+            continueToNext();
+            return 2; // Error - Incorrect Credentials
         }
 
         void logout() {}
 
-        virtual void menu() = 0;
+        virtual void menu() {}
 };
