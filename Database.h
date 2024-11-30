@@ -167,13 +167,6 @@ class Database {
             cout << "Total grades loaded: " << grades.size() << endl;
             cout << "Total commitments loaded: " << financialCommitments.size() << endl;
             cout << "Total attendance loaded: " << attendance.size() << endl;
-            
-            saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            saveData("MA2_Records-DB - Sheet1.csv", 2);
-            saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
-            saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
-            saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
-            saveData("MA2_Attendance-DB - Sheet1.csv", 6);
         }
     
     public:
