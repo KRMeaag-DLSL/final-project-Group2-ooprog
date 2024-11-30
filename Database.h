@@ -29,7 +29,7 @@ class StudentEntry {
         string getContact() { return contact;}
         void setContact(string c) { contact = c;}
         string getAddress() { return address;}
-        void setAddress(int a) { address = a;}
+        void setAddress(string a) { address = a;}
         string getEmailAddress() { return emailAddress;}
         void setEmailAddress(string ea) { emailAddress = ea;}
         string getDepartment() { return department;}
