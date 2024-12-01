@@ -112,9 +112,18 @@ class Faculty : public Account {
         }
 
         void deadlineSubMenu() {
-            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
+            Database* db = Database::getInstance();
+            vector<Deadline>& deadlines = db->getDeadlines();
 
+            for (auto& deadline : deadlines) {
+                cout << deadline.getSection() << endl;
+                cout << deadline.getDeadlineDate() << endl;
+                cout << deadline.getSubject() << endl;
+                cout << "\nNext Entry" << endl;
+            }
 
+            cout << endl;
+            continueToNext();
         }
 
         void searchStudent() {
