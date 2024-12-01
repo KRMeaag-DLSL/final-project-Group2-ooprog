@@ -6,6 +6,7 @@
 #include "Database.h"
 #include "Faculty.h"
 #include "Users.h"
+#include "Admin.h"
 
 using namespace std;
 
@@ -34,12 +35,15 @@ int main() {
         cout << "[2] Exit Program" << endl;
         cout << "\nType your choice: ";
         switch(inputMenu(2)) {
+            case -1 : 
+                continue;
             case 1:
                 // Continue Program
                 break;
             case 2:
                 cout << "\nExiting the program..." << endl;
                 return 0;
+                break;
         }
     
         if (user.login(&accountType, &accountID) != 0) {
@@ -51,7 +55,6 @@ int main() {
                     break;
                 case 1:    
                     facultyHandler(accountID);
-
                     break;
                 case 2:
                     studentHandler(accountID);
@@ -65,13 +68,23 @@ int main() {
 
 void adminHandler(string accountID) {
     cout << "Admin much wow" << endl;
+
+    // Add admin functionality here
+    Admin admin;
+    admin.menu();
 }
 
 void facultyHandler(string accountID) {
     Faculty faculty(accountID);
+    
+
+
+
     cout << "Faculty much wow" << endl;
 }
 
 void studentHandler(string accountID) {
     cout << "Student much wow" << endl;
+
+    // Add student functionality here
 }

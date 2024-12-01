@@ -17,18 +17,30 @@ class Admin : Account{
 
     public:
         void createStudentEntry() {
-            StudentEntry student;
+            clearScreen();
+            string section, name, contact, address, emailAddress, department;
+            int id, age;
             cout << "Enter Student ID: ";
-            cin >> student.studentID;
+            cin >> id;
+            cin.ignore();
+            cout << "Enter Student Section: ";
+            getline(cin, section);
+            cout << "Enter Student Age: ";
+            cin >> age;
             cin.ignore();
             cout << "Enter Student Name: ";
-            getline(cin, student.studentName);
-            cout << "Enter Student Email: ";
-            getline(cin, student.studentEmail);
-            cout << "Enter Student Phone Number: ";
-            getline(cin, student.studentPhoneNumber);
+            getline(cin, name);
             cout << "Enter Student Address: ";
-            getline(cin, student.studentAddress);
+            getline(cin, address);
+            cout << "Enter Student Email: ";
+            getline(cin, emailAddress);
+            cout << "Enter Student Department: ";
+            getline(cin, department);
+
+            Database::getInstance()->getStudentEntries().push_back(
+                StudentEntry(id,section,name,age,contact,address,emailAddress,department));
+            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+
         }
         void createDisciplinaryRecord() {}
         void searchStudent() {}
