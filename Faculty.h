@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iomanip>
 #include "Global-Functions.h"
 #include "Users.h"
 #include "Database.h"
@@ -16,7 +17,7 @@ class Faculty : public Account {
         string assignedSection;
 
     public:
-        Faculty(string facultyID) : facultyID(facultyID) {
+        Faculty(string facultyID) : facultyID(facultyID), currentSubject("Default"), assignedSection("Default") {
             ifstream fin;
             string line;
 
@@ -32,7 +33,7 @@ class Faculty : public Account {
             while(getline(fin, line)) {
                 string userID, subject, section;
                 stringstream s(line);
-                
+
                 getline(s, userID, ',');
                 getline(s, subject, ',');
                 getline(s, section, ',');
@@ -52,15 +53,23 @@ class Faculty : public Account {
             return currentSubject;
         }
 
+        string getAssignedSection() {
+            return assignedSection;
+        }
+
         void menu() override {
             int choice;
             bool loopMenu = true;
 
+            cout << assignedSection << endl;
+            cout << currentSubject << endl;
+            
             // Main Menu
             while (loopMenu) {
-                clearScreen();
-                cout << "Good day, " << facultyID << "! Please pick from the following:" << endl;
-
+                cout << "Good day, " << facultyID << "! " << currentSubject <<  "Please pick from the following:" << endl;
+                cout << "Good day, " << facultyID << "! " << assignedSection <<  "Please pick from the following:" << endl;
+                cout << "hello" << endl;
+                cout << assignedSection << endl;
                 cout << "[1] Manage Deadlines" << endl;
                 cout << "[2] Update Student Performance" << endl;
                 cout << "[3] Search Student" << endl;
@@ -109,10 +118,50 @@ class Faculty : public Account {
         void deleteDeadline() {}
 
         void searchStudent() {
-            string choice;
-            cout << "Search Student Menu" << endl;
-            cout << "Type anything to continue: ";
-            cin >> choice;
+            vector<StudentEntry> entry = Database::getInstance()->getStudentEntries();
+            int searchID;
+            
+            clearScreen();
+            cout << "Which student do you want to search for?" << endl;
+            cout << "Type the student's ID number: ";
+            searchID = inputStudentID();
+
+            // Input Error
+            if (searchID == -1) {
+                return;
+            }
+
+            for (auto& student : entry) {
+                if (searchID == student.getStudentID()) {
+                    // Student is not under teacher's section
+                    cout << assignedSection << endl;
+                    if (assignedSection != student.getSection()) {
+                        cout << "Teacher's Section: " << assignedSection;
+                        cout << "Student's Section: " << student.getSection();
+
+                        cout << "\nYou are not allowed to view this student's information. Student is assigned to another section" << endl;
+                        continueToNext();
+                        return;
+                    }
+
+                    cout << "\nEntry Found!" << endl;
+                    cout << "Student ID: " << student.getStudentID() << endl;
+                    cout << "Student Section " << student.getSection() << endl;
+                    cout << "Student Name: " << student.getName() << endl;
+                    cout << "Student Age: " << student.getAge() << endl;
+                    cout << "Student Contact: " << student.getContact() << endl;
+                    cout << "Student Address: " << student.getAddress() << endl;
+                    cout << "Student Email Address: " << student.getEmailAddress() << endl;
+                    cout << "Student Department: " << student.getDepartment() << endl << endl;
+
+                    continueToNext();
+                    return;
+                }
+            }
+
+            cout << "\nStudent ID does not exist in the database." << endl;
+            continueToNext();
+            return;
         }
 
         void updateGrades() {
@@ -136,7 +185,7 @@ class Faculty : public Account {
             
             clearScreen();
             cout << "Which student's grades would you want to update?" << endl;
-            cout << "Type student number here: ";
+            cout << "Type the student's ID number: ";
             searchID = inputStudentID();
 
             // Input Error
@@ -213,14 +262,14 @@ class Faculty : public Account {
         }
 
         void updateAttendance() {
-
+            
         }
 
         void updateStudentPerformance() {
             int choice;
             bool loopMenu = true;
 
-            // Main Menu
+            // Student Perf Sub Menu
             while (loopMenu) {
                 clearScreen();
                 cout << "Select from the following to edit:" << endl;
@@ -250,16 +299,74 @@ class Faculty : public Account {
         }
 
         void createDisciplinaryRecord() {
-            string choice;
-            cout << "Create Disciplinary Record Menu" << endl;
-            cout << "Type anything to continue: ";
-            cin >> choice;
+            vector<Record>& records = Database::getInstance()->getRecords();
+
+            int searchID;
+            int severity;
+            string offense;
+            string date;
+            
+            clearScreen();
+            cout << "Which student committed the offense?" << endl;
+            cout << "Type the student's ID number: ";
+            searchID = inputStudentID();
+
+            // Input Error
+            if (searchID == -1) {
+                return;
+            }
+
+            for (auto& student : records) {
+                if (searchID == student.getStudentID()) {
+                    cout << "\nStudent Found!" << endl;
+                    cout << "\nWhat is the offense?" << endl;
+                    cout << "Type the student's offense here: ";
+                    getline(cin, offense);
+                    cin.ignore();
+                    while (true) {
+                        cout << "\nWhat is the severity of the offense?" << endl;
+                        cout << "Type the severity here [1 - 4]: ";
+                        severity = inputMenu(4);
+                        if (severity != -1) {
+                            break;
+                        }
+                    }
+
+                    cout << "\nWhat is the date of officially recording this offense?" << endl;
+                    cout << "Type date here MM/DD/YYYY: ";
+                    cin >> date;
+
+                    records.push_back(Record(searchID, offense, severity, date));
+
+                    Database::getInstance()->saveData("MA2_Records-DB - Sheet1.csv", 2);
+
+                    return;
+                }
+            }
+
+            cout << "\nStudent ID does not exist in the database." << endl;
+            continueToNext();
+            return;            
         }
 
         void displayStudentList() {
-            string choice;
-            cout << "Display Student List Menu" << endl;
-            cout << "Type anything to continue: ";
-            cin >> choice;
+            vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
+            const int WIDTH = 25;
+
+            cout << "Displaying student entries under your specific subject" << endl;
+
+            cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
+            
+            for (auto& student : students) {
+                cout << student.getStudentID() << setw(WIDTH) 
+                << student.getSection() << setw(WIDTH) 
+                << student.getName() << setw(WIDTH) 
+                << student.getDepartment() << setw(WIDTH) 
+                << student.getEmailAddress() << endl;
+            }
+
+            cout << endl;
+            continueToNext();
+            return;
         }
 };

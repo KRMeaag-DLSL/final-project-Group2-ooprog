@@ -10,6 +10,7 @@ using namespace std;
 class StudentEntry {
     private:
         int studentID;
+        string section;
         string name;
         int age;
         string contact;
@@ -17,11 +18,13 @@ class StudentEntry {
         string emailAddress;
         string department;
     public:
-        StudentEntry(int id, string name, int age, string contact, string address, string emailAddress, string department) :
-         studentID(id), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
+        StudentEntry(int id, string section, string name, int age, string contact, string address, string emailAddress, string department) :
+         studentID(id), section(section), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
 
         int getStudentID() { return studentID;}
         void setStudentID(int id) {studentID = id;}
+        string getSection() { return section;}
+        void setSection(string s) { section = s;}
         string getName() const { return name;}
         void setName(string n) { name = n;}
         int getAge() { return age;}
@@ -222,8 +225,8 @@ class Database {
                 // Add entry to the vector
                 switch (type) {
                     case 1: {
-                        int age = stoi(row[2]);
-                        studentEntries.push_back(StudentEntry(id, row[1], age, row[3], row[4], row[5], row[6]));
+                        int age = stoi(row[3]);
+                        studentEntries.push_back(StudentEntry(id, row[1], row[2], age, row[4], row[5], row[6], row[7]));
                         break;
                     }
                     case 2: {
@@ -280,7 +283,7 @@ class Database {
                 case 1: {
                     fout << "Student-ID,Name,Age,Contact,Address,Email Address,Department\n";
                     for (auto& student : studentEntries) {
-                        fout << student.getStudentID() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
+                        fout << student.getStudentID() << "," << student.getSection() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
                         << "," << student.getAddress() << "," << student.getEmailAddress() << "," << student.getDepartment() << "\n";
                     }
                     break;
