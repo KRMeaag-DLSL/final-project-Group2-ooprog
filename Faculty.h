@@ -104,18 +104,25 @@ class Faculty : public Account {
             }
         }
 
-        void deadlineSubMenu() {
-            string choice;
-            cout << "Deadline Menu" << endl;
-            cout << "Type anything to continue: ";
-            cin >> choice;
+        
+
+        void createDeadline() {
+            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
         }
 
-        void createDeadline() {}
+        void updateDeadline() {
+            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
+        }
 
-        void updateDeadline() {}
+        void deleteDeadline() {
+            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
+        }
 
-        void deleteDeadline() {}
+        void deadlineSubMenu() {
+            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
+
+
+        }
 
         void searchStudent() {
             vector<StudentEntry> entry = Database::getInstance()->getStudentEntries();
