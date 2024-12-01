@@ -164,7 +164,7 @@ class Student : public Account {
             cout << "Contact Number: " << student.getContact() << "\n";
             cout << "Address: " << student.getAddress() << "\n";
             cout << "Email Address: " << student.getEmailAddress() << "\n";
-            cout << "-------------------------------------------------\n";
+            cout << "--------------------------------------------------\n";
             return; 
         }
     }
@@ -182,11 +182,20 @@ class Student : public Account {
 
                 cout << "Editing Student Information for Student ID " << studentID << ":\n";
 
-                cout << "Enter new contact number (leave blank to keep current): ";
-                getline(cin, newContact);
+                 cout << "Enter new contact number (format: 123-456-7890, leave blank to keep current): ";
+                 getline(cin, newContact);
                 if (!newContact.empty()) {
+                if (newContact.length() == 12 &&
+                    newContact[3] == '-' &&
+                    newContact[7] == '-' &&
+                    checkStrDigit(newContact.substr(0, 3)) &&
+                    checkStrDigit(newContact.substr(4, 3)) &&
+                    checkStrDigit(newContact.substr(8, 4))) {
                     student.setContact(newContact);
+                } else {
+                    cout << "Invalid contact number format. Keeping the current one.\n";
                 }
+            }
 
                 cout << "Enter new address (leave blank to keep current): ";
                 getline(cin, newAddress);

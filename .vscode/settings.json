@@ -1,12 +1,5 @@
 {
     "files.associations": {
-        "*.cs": "csharp",
-        "format": "cpp",
-        "vector": "cpp",
-        "fstream": "cpp",
-        "string": "cpp",
-        "xstring": "cpp",
-        "iosfwd": "cpp",
         "iostream": "cpp"
     }
 }
