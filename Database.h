@@ -184,6 +184,7 @@ class Database {
         vector<Deadline>& getDeadlines() { return deadlines;}
         vector<Attendance>& getAttendance() { return attendance;}
         vector<FinancialCommitment>& getFinancialCommitments() { return financialCommitments;}
+        void addStudentEntry(StudentEntry& entry) { studentEntries.push_back(entry);}
 
         void getRowFromFile(ifstream& fin, vector<string>& row, string line, string word) {
             row.clear();
@@ -272,6 +273,7 @@ class Database {
 
             switch(type) {
                 case 1: {
+                    cout << "Hello" << endl;
                     fout << "Student-ID,Name,Age,Contact,Address,Email Address,Department\n";
                     for (auto& student : studentEntries) {
                         fout << student.getStudentID() << "," << student.getSection() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()

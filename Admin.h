@@ -37,9 +37,10 @@ class Admin : Account{
             cout << "Enter Student Department: ";
             getline(cin, department);
 
-            Database::getInstance()->getStudentEntries().push_back(
-                StudentEntry(id,section,name,age,contact,address,emailAddress,department));
+            Database::getInstance()->addStudentEntry(StudentEntry(id,section,name,age,contact,address,emailAddress,department));
+            cout << Database::getInstance()->getStudentEntries().size() << endl;
             Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            system("pause");
 
         }
         void createDisciplinaryRecord() {}

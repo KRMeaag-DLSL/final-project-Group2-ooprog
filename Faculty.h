@@ -88,10 +88,10 @@ class Faculty : public Account {
                         updateStudentPerformance();
                         break;
                     case 3:
-                        searchStudent();
+                        // searchStudent();
                         break;
                     case 4:
-                        displayStudentList();
+                        // displayStudentList();
                         break;
                     case 5:
                         createDisciplinaryRecord();
@@ -117,54 +117,54 @@ class Faculty : public Account {
 
         void deleteDeadline() {}
 
-        void searchStudent() {
-            vector<StudentEntry> entry = Database::getInstance()->getStudentEntries();
-            int searchID;
+        // void searchStudent() {
+        //     vector<StudentEntry> entry = Database::getInstance()->getStudentEntries();
+        //     int searchID;
             
-            clearScreen();
-            cout << "Which student do you want to search for?" << endl;
-            cout << "Type the student's ID number: ";
-            searchID = inputStudentID();
+        //     clearScreen();
+        //     cout << "Which student do you want to search for?" << endl;
+        //     cout << "Type the student's ID number: ";
+        //     searchID = inputStudentID();
 
-            // Input Error
-            if (searchID == -1) {
-                return;
-            }
+        //     // Input Error
+        //     if (searchID == -1) {
+        //         return;
+        //     }
 
-            for (auto& student : entry) {
-                if (searchID == student.getStudentID()) {
-                    // Student is not under teacher's section
-                    cout << assignedSection << endl;
-                    if (assignedSection != student.getSection()) {
-                        cout << "Teacher's Section: " << assignedSection;
-                        cout << "Student's Section: " << student.getSection();
+        //     for (auto& student : entry) {
+        //         if (searchID == student.getStudentID()) {
+        //             // Student is not under teacher's section
+        //             cout << assignedSection << endl;
+        //             if (assignedSection != student.getSection()) {
+        //                 cout << "Teacher's Section: " << assignedSection;
+        //                 cout << "Student's Section: " << student.getSection();
 
-                        cout << "\nYou are not allowed to view this student's information. Student is assigned to another section" << endl;
-                        continueToNext();
-                        return;
-                    }
+        //                 cout << "\nYou are not allowed to view this student's information. Student is assigned to another section" << endl;
+        //                 continueToNext();
+        //                 return;
+        //             }
 
-                    cout << "\nEntry Found!" << endl;
-                    cout << "Student ID: " << student.getStudentID() << endl;
-                    cout << "Student Section " << student.getSection() << endl;
-                    cout << "Hello" << endl;
-                    cout << student.getName() << endl;
-                    cout << "Student Name: " << student.getName() << endl;
-                    cout << "Student Age: " << student.getAge() << endl;
-                    cout << "Student Contact: " << student.getContact() << endl;
-                    cout << "Student Address: " << student.getAddress() << endl;
-                    cout << "Student Email Address: " << student.getEmailAddress() << endl;
-                    cout << "Student Department: " << student.getDepartment() << endl << endl;
+        //             cout << "\nEntry Found!" << endl;
+        //             cout << "Student ID: " << student.getStudentID() << endl;
+        //             cout << "Student Section " << student.getSection() << endl;
+        //             cout << "Hello" << endl;
+        //             cout << student.getName() << endl;
+        //             cout << "Student Name: " << student.getName() << endl;
+        //             cout << "Student Age: " << student.getAge() << endl;
+        //             cout << "Student Contact: " << student.getContact() << endl;
+        //             cout << "Student Address: " << student.getAddress() << endl;
+        //             cout << "Student Email Address: " << student.getEmailAddress() << endl;
+        //             cout << "Student Department: " << student.getDepartment() << endl << endl;
 
-                    continueToNext();
-                    return;
-                }
-            }
+        //             continueToNext();
+        //             return;
+        //         }
+        //     }
 
-            cout << "\nStudent ID does not exist in the database." << endl;
-            continueToNext();
-            return;
-        }
+        //     cout << "\nStudent ID does not exist in the database." << endl;
+        //     continueToNext();
+        //     return;
+        // }
 
         void updateGrades() {
             Database* db = Database::getInstance();
@@ -351,24 +351,24 @@ class Faculty : public Account {
             return;            
         }
 
-        void displayStudentList() {
-            vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
-            const int WIDTH = 25;
+        // void displayStudentList() {
+        //     vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
+        //     const int WIDTH = 25;
 
-            cout << "Displaying student entries under your specific subject" << endl;
+        //     cout << "Displaying student entries under your specific subject" << endl;
 
-            cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
+        //     cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
             
-            for (auto& student : students) {
-                cout << student.getStudentID() << setw(WIDTH) 
-                << student.getSection() << setw(WIDTH) 
-                << student.getName() << setw(WIDTH) 
-                << student.getDepartment() << setw(WIDTH) 
-                << student.getEmailAddress() << endl;
-            }
+        //     for (auto& student : students) {
+        //         cout << student.getStudentID() << setw(WIDTH) 
+        //         << student.getSection() << setw(WIDTH) 
+        //         << student.getName() << setw(WIDTH) 
+        //         << student.getDepartment() << setw(WIDTH) 
+        //         << student.getEmailAddress() << endl;
+        //     }
 
-            cout << endl;
-            continueToNext();
-            return;
-        }
+        //     cout << endl;
+        //     continueToNext();
+        //     return;
+        // }
 };
