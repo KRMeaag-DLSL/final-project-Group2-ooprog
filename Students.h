@@ -42,13 +42,10 @@ class Student : public Account {
                 cout << "[6] Edit Student Information" << endl;
                 cout << "[7] Log-out" << endl;
 
-                choice = inputMenu(7);
 
-                if (choice == -1) {
-                    continue;
-                }
-
-                switch (choice) {
+                switch (inputMenu(7)) {
+                    case -1:
+                        continue;
                     case 1:
                         displayStudentGrades();
                         break;
@@ -68,7 +65,7 @@ class Student : public Account {
                         editStudentInformation();
                         break;
                     case 7:
-                        logout();
+                        return;
                         break;
                 }
             }
@@ -127,7 +124,7 @@ class Student : public Account {
             if (to_string(attendance.getStudentID()) == studentID) {
              cout << "Absents: " << attendance.getAbsents() << "\n";
              cout << "Lates: " << attendance.getLates() << "\n";
-             cout << "-------------------------\n";
+             cout << "--------------------------------------\n";
             return;
         }
     }
@@ -146,7 +143,7 @@ class Student : public Account {
             cout << "Additional Fees: " << commitment.getAdditionalFees() << "\n";
             cout << "Paid Amount: " << commitment.getPaidAmount() << "\n";
             cout << "Payment Deadline: " << commitment.getPaymentDeadline() << "\n";
-            cout << "-------------------------\n";
+            cout << "-----------------------------------------------------------\n";
             return; 
         }
     }
@@ -162,11 +159,12 @@ class Student : public Account {
     for (auto& student : studentEntries) {
         if (to_string(student.getStudentID()) == studentID) {
             cout << "Name: " << student.getName() << "\n";
+            cout << "Section: " << student.getSection() << "\n";
             cout << "Age: " << student.getAge() << "\n";
             cout << "Contact Number: " << student.getContact() << "\n";
             cout << "Address: " << student.getAddress() << "\n";
             cout << "Email Address: " << student.getEmailAddress() << "\n";
-            cout << "-------------------------\n";
+            cout << "-------------------------------------------------\n";
             return; 
         }
     }
@@ -184,19 +182,6 @@ class Student : public Account {
 
                 cout << "Editing Student Information for Student ID " << studentID << ":\n";
 
-                cout << "Enter new name (leave blank to keep current): ";
-                getline(cin, newName);
-                if (!newName.empty()) {
-                    student.setName(newName);
-                }
-
-                cout << "Enter new age (enter -1 to keep current): ";
-                cin >> newAge;
-                if (newAge != -1) {
-                    student.setAge(newAge);
-                }
-                cin.ignore(); // To handle newline after integer input
-
                 cout << "Enter new contact number (leave blank to keep current): ";
                 getline(cin, newContact);
                 if (!newContact.empty()) {
@@ -207,12 +192,6 @@ class Student : public Account {
                 getline(cin, newAddress);
                 if (!newAddress.empty()) {
                     student.setAddress(newAddress);
-                }
-
-                cout << "Enter new email address (leave blank to keep current): ";
-                getline(cin, newEmail);
-                if (!newEmail.empty()) {
-                    student.setEmailAddress(newEmail);
                 }
 
                 cout << "Information successfully updated.\n";

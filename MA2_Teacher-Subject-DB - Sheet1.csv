@@ -1,5 +1,5 @@
-Faculty-ID,Subject
-Faculty201,English
-Faculty202,Math
-Faculty203,Science
-Faculty204,Filipino
+Faculty-ID,Subject,Section
+Faculty201,English,BM105
+Faculty202,Math,BM202
+Faculty203,Science,CMR204
+Faculty204,Filipino,CMR207
