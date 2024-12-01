@@ -149,13 +149,9 @@ inline int checkDate(string input) {
         return 1;
     }
 
-    cout << "Test 1 Done" << endl;
-
     if (input[2] != '/' || input[5] != '/') {
         return 1;
     }
-
-    cout << "Test 2 Done" << endl;
 
     for (int i = 0; i < input.length(); i++) {
         if (input[i] == '/') {
@@ -165,15 +161,9 @@ inline int checkDate(string input) {
         }
     }
 
-    cout << "SlashCtr: " << slashCtr << endl;
-    cout << "DigitCtr: " << digitCtr << endl;
-    cout << "Test 3 Done" << endl;
-
     if (slashCtr != 2 || digitCtr != 8) {
         return 1;
     }
-
-    cout << "Test 4 Done" << endl;
 
     int month = stoi(input.substr(0, 2));
     int day = stoi(input.substr(3, 2));
@@ -183,14 +173,11 @@ inline int checkDate(string input) {
         return 2;
     }
 
-    cout << "Test 5 Done" << endl;
-
     if (day < 1 || day > 31) {
         return 3;
     }
     
-    cout << "Test 6 Done" << endl;
-    if (month <= 12 && day <= 3 && year <= 2024) {
+    if (month < 12 && year <= 2024) {
         return 4;
     }
 
@@ -198,28 +185,28 @@ inline int checkDate(string input) {
 }
 
 // Asks for date input, returns date if no errors and returns "INVALID_ERROR!" if an error occurs
-inline string inputDate() {
+inline string inputDate(bool isAdding) {
     string input;
     try {
         cin >> input;
         switch (checkDate(input)) {
             case 0:
                 return input;
-
             case 1:
                 throw string("Input is not a date. Please try again!");
                 break;
-
             case 2:
                 throw string("Input does not follow the correct month format (MM/DD/YYYY). Please try again!");
                 break;
-
             case 3:
                 throw string("Input's day is invalid. Please try again!");
                 break;
             case 4:
-                throw string("You are trying to set a deadline in the past. Please try again!");
-                break;
+                if (isAdding) {
+                    throw string("You are trying to set a deadline in the past. Please try again!");
+                    break;
+                }
+                return input;
         }
     } catch (const string& msg) {
         cout << msg << endl;

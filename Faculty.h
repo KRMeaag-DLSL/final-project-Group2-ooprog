@@ -92,8 +92,9 @@ class Faculty : public Account {
                         createDisciplinaryRecord();
                         break;
                     case 6:
-                        return;
-                        // logout();
+                        if (logout()) {
+                            return;
+                        }
                         break;
                 }
             }
@@ -109,7 +110,7 @@ class Faculty : public Account {
             cout << "\nWhat is the date of your new deadline?" << endl;
             cout << "Type here (MM/DD/YYYY): ";
 
-            date = inputDate();
+            date = inputDate(true);
             if (date == "INVALID_ERROR!") {
                 return;
             }
@@ -158,7 +159,7 @@ class Faculty : public Account {
             cout << "\nWhich date will you update? (Input the date and priority)" << endl;
             cout << "Type here (MM/DD/YYYY): ";
 
-            date = inputDate();
+            date = inputDate(false);
             if (date == "INVALID_ERROR!") {
                 return;
             }
@@ -197,7 +198,7 @@ class Faculty : public Account {
                             return;
                         case 2:
                             cout << "Type the new date of " << deadline.getDeadlineDate() << " (MM/DD/YYYY): ";
-                            date = inputDate();
+                            date = inputDate(true);
                             if (date == "INVALID_ERROR!") {
                                 return;
                             }
@@ -238,7 +239,7 @@ class Faculty : public Account {
 
             cout << "\nWhich date will you delete? (Input the date and priority)" << endl;
             cout << "Type the date of the entry you want to delete (MM/DD/YYYY): ";
-            date = inputDate();
+            date = inputDate(false);
             if (date == "INVALID_ERROR!") {
                 return;
             }
@@ -297,21 +298,6 @@ class Faculty : public Account {
                         return;
                 }
             }
-
-
-
-            Database* db = Database::getInstance();
-            vector<Deadline>& deadlines = db->getDeadlines();
-
-            for (auto& deadline : deadlines) {
-                cout << deadline.getSection() << endl;
-                cout << deadline.getDeadlineDate() << endl;
-                cout << deadline.getSubject() << endl;
-                cout << "\nNext Entry" << endl;
-            }
-
-            cout << endl;
-            continueToNext();
         }
 
         void searchStudent() {
@@ -343,7 +329,6 @@ class Faculty : public Account {
                     cout << "Student Name: " << student.getName() << endl;
                     cout << "Student Age: " << student.getAge() << endl;
                     cout << "Student Contact: " << student.getContact() << endl;
-                    cout << "Student Address: " << student.getAddress() << endl;
                     cout << "Student Email Address: " << student.getEmailAddress() << endl;
                     cout << "Student Department: " << student.getDepartment() << endl << endl;
 
@@ -625,7 +610,7 @@ class Faculty : public Account {
 
                     cout << "\nWhat is the date of officially recording this offense?" << endl;
                     cout << "Type here (MM/DD/YYYY): ";
-                    date = inputDate();
+                    date = inputDate(true);
                     if (date == "INVALID_ERROR!") {
                         return;
                     }
