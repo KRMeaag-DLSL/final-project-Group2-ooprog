@@ -19,7 +19,7 @@ class StudentEntry {
         string department;
     public:
         StudentEntry(int id, string section, string name, int age, string contact, string address, string emailAddress, string department) :
-         studentID(id), section(section), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
+        studentID(id), section(section), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
 
         int getStudentID() { return studentID;}
         void setStudentID(int id) {studentID = id;}
@@ -32,7 +32,7 @@ class StudentEntry {
         string getContact() { return contact;}
         void setContact(string c) { contact = c;}
         string getAddress() { return address;}
-        void setAddress(int a) { address = a;}
+        void setAddress(string a) { address = a;}
         string getEmailAddress() { return emailAddress;}
         void setEmailAddress(string ea) { emailAddress = ea;}
         string getDepartment() { return department;}
@@ -170,15 +170,6 @@ class Database {
             cout << "Total grades loaded: " << grades.size() << endl;
             cout << "Total commitments loaded: " << financialCommitments.size() << endl;
             cout << "Total attendance loaded: " << attendance.size() << endl;
-            
-            /*
-            saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            saveData("MA2_Records-DB - Sheet1.csv", 2);
-            saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
-            saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
-            saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
-            saveData("MA2_Attendance-DB - Sheet1.csv", 6);
-            */
         }
     
     public:

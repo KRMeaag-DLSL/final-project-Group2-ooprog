@@ -6,6 +6,7 @@
 #include "Database.h"
 #include "Faculty.h"
 #include "Users.h"
+#include "Admin.h"
 
 using namespace std;
 
@@ -69,6 +70,8 @@ void adminHandler(string accountID) {
     cout << "Admin much wow" << endl;
 
     // Add admin functionality here
+    Admin admin;
+    admin.menu();
 }
 
 void facultyHandler(string accountID) {

@@ -35,8 +35,8 @@ class Faculty : public Account {
                 stringstream s(line);
 
                 getline(s, userID, ',');
-                getline(s, subject, ',');
                 getline(s, section, ',');
+                getline(s, subject, ',');
 
                 if (userID == facultyID) {
                     currentSubject = subject;
@@ -61,15 +61,10 @@ class Faculty : public Account {
             int choice;
             bool loopMenu = true;
 
-            cout << assignedSection << endl;
-            cout << currentSubject << endl;
-            
             // Main Menu
             while (loopMenu) {
-                cout << "Good day, " << facultyID << "! " << currentSubject <<  "Please pick from the following:" << endl;
-                cout << "Good day, " << facultyID << "! " << assignedSection <<  "Please pick from the following:" << endl;
-                cout << "hello" << endl;
-                cout << assignedSection << endl;
+                clearScreen();
+                cout << "Good day, " << facultyID << "! Please pick from the following:" << endl;
                 cout << "[1] Manage Deadlines" << endl;
                 cout << "[2] Update Student Performance" << endl;
                 cout << "[3] Search Student" << endl;
@@ -103,8 +98,6 @@ class Faculty : public Account {
                 }
             }
         }
-
-        
 
         void createDeadline() {
             vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
@@ -141,11 +134,7 @@ class Faculty : public Account {
             for (auto& student : entry) {
                 if (searchID == student.getStudentID()) {
                     // Student is not under teacher's section
-                    cout << assignedSection << endl;
                     if (assignedSection != student.getSection()) {
-                        cout << "Teacher's Section: " << assignedSection;
-                        cout << "Student's Section: " << student.getSection();
-
                         cout << "\nYou are not allowed to view this student's information. Student is assigned to another section" << endl;
                         continueToNext();
                         return;
@@ -225,7 +214,7 @@ class Faculty : public Account {
             cout << "\nInput new grade: ";
 
             // Checks for error before changing grade
-            if (!inputNum(&newGrade)) {
+            if (!inputDoubleNum(&newGrade)) {
                 return;
             }
 
@@ -266,10 +255,110 @@ class Faculty : public Account {
 
             // Saves data
             db->saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
+
+            cout << "\nSuccessfully saved the changes to the student's grades." << endl;
+            continueToNext();
         }
 
         void updateAttendance() {
+            Database* db = Database::getInstance();
+            vector<Attendance>& attendance = db->getAttendance();
+
+            int searchID;
+            int keyDatabase = -1;
+            bool isEditAbsent;
+            bool isIncrease;
+            double input;
+            int days;
             
+            clearScreen();
+            cout << "Which student do you want to change the attendance re?" << endl;
+            cout << "Type the student's ID number: ";
+            searchID = inputStudentID();
+
+            // Input Error
+            if (searchID == -1) {
+                return;
+            }
+
+            // Search for Student in Database
+            for (int i = 0; i < attendance.size(); i++) {
+                if (attendance[i].getStudentID() == searchID) {
+                    keyDatabase = i;
+                }
+            }
+
+            // Student Not Found
+            if (keyDatabase == -1) {
+                cout << "\nID does not match any student in the database." << endl;
+                continueToNext();
+                return;
+            }
+
+            cout << "\nEntry found! Attendance records of student:" << attendance[keyDatabase].getStudentID() << endl;
+            cout << "Absents: " << attendance[keyDatabase].getAbsents() << endl;
+            cout << "Lates: " << attendance[keyDatabase].getLates() << endl;
+
+            // Edit the attendance
+            cout << "\nWill you edit the number of absent days or late days?" << endl;
+            cout << "[1] Absent Days" << endl;
+            cout << "[2] Late Days" << endl;
+            cout << "Type your choice: ";
+
+            switch (inputMenu(2)) {
+                case -1:
+                    return;
+
+                case 1:
+                    isEditAbsent = true;
+                    break;
+
+                case 2:
+                    isEditAbsent = false;
+                    break;
+            }
+
+            cout << "\nIncrease or Decrease?" << endl;
+            cout << "[1] Increase" << endl;
+            cout << "[2] Decrease" << endl;
+            cout << "Type your choice: ";
+
+            switch (inputMenu(2)) {
+                case -1:
+                    return;
+
+                case 1:
+                    isIncrease = true;
+                    break;
+
+                case 2:
+                    isIncrease = false;
+                    break;
+            }
+
+            cout << (isIncrease ? "\nAdd " : "\nSubtract ") << (isEditAbsent ? "absent days " : "late days ") << "by: ";
+            
+            if (!inputIntNum(&days)) {
+                return;
+            }
+
+            if (isEditAbsent && isIncrease) {
+                attendance[keyDatabase].setAbsents(attendance[keyDatabase].getAbsents() + days);
+            } else if (isEditAbsent && !isIncrease) {
+                attendance[keyDatabase].setAbsents(attendance[keyDatabase].getAbsents() - days);
+            } else if (!isEditAbsent && isIncrease) {
+                attendance[keyDatabase].setLates(attendance[keyDatabase].getLates() + days);
+            } else {
+                attendance[keyDatabase].setLates(attendance[keyDatabase].getLates() - days);
+            }
+
+            db->saveData("MA2_Attendance-DB - Sheet1.csv", 6);
+
+            cout << "\nSuccessfully saved the changes to the student's grades." << endl;
+            cout << "\nNew attendance records of student " << attendance[keyDatabase].getStudentID() << endl;
+            cout << "Absents: " << attendance[keyDatabase].getAbsents() << endl;
+            cout << "Lates: " << attendance[keyDatabase].getLates() << endl << endl;
+            continueToNext();
         }
 
         void updateStudentPerformance() {
@@ -299,14 +388,12 @@ class Faculty : public Account {
                         return;
                 }
             }
-
-            cout << "Update Student Performance Menu" << endl;
-            cout << "Type anything to continue: ";
-            cin >> choice;
         }
 
         void createDisciplinaryRecord() {
-            vector<Record>& records = Database::getInstance()->getRecords();
+            Database* db = Database::getInstance();
+            vector<StudentEntry>& information = db->getStudentEntries();
+            vector<Record>& records = db->getRecords();
 
             int searchID;
             int severity;
@@ -323,13 +410,13 @@ class Faculty : public Account {
                 return;
             }
 
-            for (auto& student : records) {
+            for (auto& student : information) {
                 if (searchID == student.getStudentID()) {
                     cout << "\nStudent Found!" << endl;
                     cout << "\nWhat is the offense?" << endl;
                     cout << "Type the student's offense here: ";
-                    getline(cin, offense);
                     cin.ignore();
+                    getline(cin, offense);
                     while (true) {
                         cout << "\nWhat is the severity of the offense?" << endl;
                         cout << "Type the severity here [1 - 4]: ";
@@ -340,13 +427,16 @@ class Faculty : public Account {
                     }
 
                     cout << "\nWhat is the date of officially recording this offense?" << endl;
-                    cout << "Type date here MM/DD/YYYY: ";
+                    cout << "Type date here [MM/DD/YYYY]: ";
                     cin >> date;
 
                     records.push_back(Record(searchID, offense, severity, date));
 
-                    Database::getInstance()->saveData("MA2_Records-DB - Sheet1.csv", 2);
+                    
+                    db->saveData("MA2_Records-DB - Sheet1.csv", 2);
 
+                    cout << "\nSuccessfully saved the changes to the student's grades." << endl;
+                    continueToNext();
                     return;
                 }
             }
@@ -360,16 +450,17 @@ class Faculty : public Account {
             vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
             const int WIDTH = 25;
 
-            cout << "Displaying student entries under your specific subject" << endl;
+            cout << "Displaying student entries under your assigned section" << endl;
 
             cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
             
             for (auto& student : students) {
-                cout << student.getStudentID() << setw(WIDTH) 
-                << student.getSection() << setw(WIDTH) 
-                << student.getName() << setw(WIDTH) 
-                << student.getDepartment() << setw(WIDTH) 
-                << student.getEmailAddress() << endl;
+                if (assignedSection == student.getSection()) {
+                    cout << student.getStudentID() << setw(WIDTH) 
+                    << student.getSection() << setw(WIDTH) 
+                    << student.getName() << setw(WIDTH) 
+                    << student.getDepartment() << endl;
+                }
             }
 
             cout << endl;

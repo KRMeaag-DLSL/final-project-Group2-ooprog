@@ -13,4 +13,6 @@ Database* Database::instance = nullptr;
 
 int main() {
     Faculty faculty("Faculty201");
+
+    faculty.menu();
 }
