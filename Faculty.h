@@ -107,8 +107,13 @@ class Faculty : public Account {
 
             clearScreen();
             cout << "\nWhat is the date of your new deadline?" << endl;
-            cout << "Type here: ";
-            cin >> date;
+            cout << "Type here (MM/DD/YYYY): ";
+
+            date = inputDate();
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
+
             cout << "What is the priority of your new deadlne?: ";
             priority = inputMenu(3);
 
@@ -151,8 +156,13 @@ class Faculty : public Account {
 
             // Input Search Key
             cout << "\nWhich date will you update? (Input the date and priority)" << endl;
-            cout << "Type the date of the entry you want to update: ";
-            cin >> date;
+            cout << "Type here (MM/DD/YYYY): ";
+
+            date = inputDate();
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
+            
             cout << "Type the priority of the entry you want to update: ";
             priority = inputMenu(3);
 
@@ -187,7 +197,10 @@ class Faculty : public Account {
                             return;
                         case 2:
                             cout << "Type the new date of " << deadline.getDeadlineDate() << " (MM/DD/YYYY): ";
-                            cin >> date;
+                            date = inputDate();
+                            if (date == "INVALID_ERROR!") {
+                                return;
+                            }
                             deadline.setDeadlineDate(date);
                             db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
 
@@ -224,8 +237,11 @@ class Faculty : public Account {
             }
 
             cout << "\nWhich date will you delete? (Input the date and priority)" << endl;
-            cout << "Type the date of the entry you want to delete: ";
-            cin >> date;
+            cout << "Type the date of the entry you want to delete (MM/DD/YYYY): ";
+            date = inputDate();
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
             cout << "Type the priority of the entry you want to delete: ";
             priority = inputMenu(3);
 
@@ -608,8 +624,11 @@ class Faculty : public Account {
                     }
 
                     cout << "\nWhat is the date of officially recording this offense?" << endl;
-                    cout << "Type date here [MM/DD/YYYY]: ";
-                    cin >> date;
+                    cout << "Type here (MM/DD/YYYY): ";
+                    date = inputDate();
+                    if (date == "INVALID_ERROR!") {
+                        return;
+                    }
 
                     records.push_back(Record(searchID, offense, severity, date));
 
