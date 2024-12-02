@@ -290,7 +290,7 @@ class Database {
                 case 3: {
                     fout << "Priority,Section,Deadline Date,Subject\n";
                     for (auto& deadline : deadlines) {
-                        fout << deadline.getPriority() << "," << deadline.getSection() << "," << deadline.getDeadlineDate() << "," << deadline.getSubject() << "," << "\n";
+                        fout << deadline.getPriority() << "," << deadline.getSection() << "," << deadline.getDeadlineDate() << "," << deadline.getSubject() << "\n";
                     }
                     break;
                 }

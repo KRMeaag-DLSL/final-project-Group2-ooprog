@@ -18,42 +18,41 @@ class Admin : Account{
     public:
         void createStudentEntry() {
             clearScreen();
-            // string section, name, contact, address, emailAddress, department, tuitionDeadline;
-            // int id, age, tuition;
-            // cout << "Enter Student ID: ";
-            // cin >> id;
-            // cin.ignore();
-            // cout << "Enter Student Section: ";
-            // getline(cin, section);
-            // cout << "Enter Student Age: ";
-            // cin >> age;
-            // cin.ignore();
-            // cout << "Enter Student Contact Info: ";
-            // getline(cin, contact);
-            // cout << "Enter Student Name: ";
-            // getline(cin, name);
-            // cout << "Enter Student Address: ";
-            // getline(cin, address);
-            // cout << "Enter Student Email: ";
-            // getline(cin, emailAddress);
-            // cout << "Enter Student Department: ";
-            // getline(cin, department);
-            // cout << "Enter Tuition Amount: ";
-            // cin >> tuition;
-            // cin.ignore();
-            // cout << "Enter Deadline Of Tuition: ";
-            // getline(cin, tuitionDeadline);
+            string section, name, contact, address, emailAddress, department, tuitionDeadline;
+            int id, age, tuition;
+            cout << "Enter Student ID: ";
+            cin >> id;
+            cin.ignore();
+            cout << "Enter Student Section: ";
+            getline(cin, section);
+            cout << "Enter Student Age: ";
+            cin >> age;
+            cin.ignore();
+            cout << "Enter Student Contact Info: ";
+            getline(cin, contact);
+            cout << "Enter Student Name: ";
+            getline(cin, name);
+            cout << "Enter Student Address: ";
+            getline(cin, address);
+            cout << "Enter Student Email: ";
+            getline(cin, emailAddress);
+            cout << "Enter Student Department: ";
+            getline(cin, department);
+            cout << "Enter Tuition Amount: ";
+            cin >> tuition;
+            cin.ignore();
+            cout << "Enter Deadline Of Tuition: ";
+            getline(cin, tuitionDeadline);
+
             Database* db = Database::getInstance();
-            db->getStudentEntries().push_back(
-                StudentEntry(0,"section","name",0,"contact","address","emailAddress","department"));
-            // Database::getInstance()->getStudentEntries().push_back(StudentEntry(id,section,name,age,contact,address,emailAddress,department));
-            // Database::getInstance()->getAttendance().push_back(Attendance(id, 0, 0));
-            // Database::getInstance()->getFinancialCommitments().push_back(FinancialCommitment(id, tuition, 0, 0, tuitionDeadline));
-            // Database::getInstance()->getGrades().push_back(Grade(id, 0, 0, 0, 0, 0, 0, 0, 0));
-            // Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            // Database::getInstance()->saveData("MA2_Attendance-DB - Sheet1.csv", 6);
-            // Database::getInstance()->saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
-            // Database::getInstance()->saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
+            db->getStudentEntries().push_back(StudentEntry(id,section,name,age,contact,address,emailAddress,department));
+            db->getAttendance().push_back(Attendance(id, 0, 0));
+            db->getFinancialCommitments().push_back(FinancialCommitment(id, tuition, 0, 0, tuitionDeadline));
+            db->getGrades().push_back(Grade(id, 0, 0, 0, 0, 0, 0, 0, 0));
+            db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            db->saveData("MA2_Attendance-DB - Sheet1.csv", 6);
+            db->saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
+            db->saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
             continueToNext();
 
         }
@@ -389,7 +388,9 @@ class Admin : Account{
             }
         }
         
-        void assignFaculty() {}
+        void assignFaculty() {
+            
+        }
         
         void updateStudentInfo() {
             clearScreen();
@@ -464,14 +465,15 @@ class Admin : Account{
                 return;
             }
             cout << "Student ID Has Been Removed From The Database!" << endl;
-            Database::getInstance()->getStudentEntries().erase(Database::getInstance()->getStudentEntries().begin() + deleteIndex);
-            Database::getInstance()->getAttendance().erase(Database::getInstance()->getAttendance().begin() + deleteIndex);
-            Database::getInstance()->getFinancialCommitments().erase(Database::getInstance()->getFinancialCommitments().begin() + deleteIndex);
-            Database::getInstance()->getGrades().erase(Database::getInstance()->getGrades().begin() + deleteIndex);
-            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
-            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            Database* db = Database::getInstance();
+            db->getStudentEntries().erase(Database::getInstance()->getStudentEntries().begin() + deleteIndex);
+            db->getAttendance().erase(Database::getInstance()->getAttendance().begin() + deleteIndex);
+            db->getFinancialCommitments().erase(Database::getInstance()->getFinancialCommitments().begin() + deleteIndex);
+            db->getGrades().erase(Database::getInstance()->getGrades().begin() + deleteIndex);
+            db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
+            db->saveData("MA2_Attendance-DB - Sheet1.csv", 6);
+            db->saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
+            db->saveData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
             continueToNext();
         }
 

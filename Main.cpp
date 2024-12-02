@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Database* Database::instance;
+Database* Database::instance = nullptr;
 
 void adminHandler(string accountID);
 
