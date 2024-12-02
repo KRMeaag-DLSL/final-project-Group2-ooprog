@@ -13,16 +13,25 @@ using namespace std;
 class Student : public Account {
     private:
     string studentID;
+    string section;
 
     public:
-        Student(string studentID) : studentID(studentID) {}
+        Student(string studentID, string section) : studentID(studentID), section(section){}
     
     string getStudentID(){
         return studentID;
     }
 
+    string getSection(){
+        return section;
+    }
+
     void setStudentID(){
         this->studentID = studentID;
+    }
+
+    void setSection(){
+        this->section = section;
     }
 
     void menu() override {
@@ -42,13 +51,10 @@ class Student : public Account {
                 cout << "[6] Edit Student Information" << endl;
                 cout << "[7] Log-out" << endl;
 
-                choice = inputMenu(7);
-
-                if (choice == -1) {
-                    continue;
-                }
-
-                switch (choice) {
+                cout << "Type your choice: ";
+                switch (inputMenu(7)) {
+                    case -1:
+                        continue;
                     case 1:
                         displayStudentGrades();
                         break;
@@ -68,7 +74,7 @@ class Student : public Account {
                         editStudentInformation();
                         break;
                     case 7:
-                        logout();
+                        return;
                         break;
                 }
             }
@@ -103,12 +109,11 @@ class Student : public Account {
         cout << "Deadlines for Student ID " << studentID << ":\n";
        
         for (auto& deadline : db->getDeadlines()) {
-            if (to_string(deadline.getStudentID()) == studentID) {
-                cout << "Name: " << deadline.getName() << "\n";
-                cout << "Days until the Deadline: " << deadline.getDaysUntilDeadlines() << "\n";
+            if (deadline.getSection() == section) {
+                cout << "Section: " << deadline.getSection() << "\n";
                 cout << "Deadline Date: " << deadline.getDeadlineDate() << "\n";
                 cout << "Subject: " << deadline.getSubject() << "\n";
-                cout << "-------------------------\n";
+                cout << "----------------------------------------\n";
                 return;
             }
         }
@@ -127,7 +132,7 @@ class Student : public Account {
             if (to_string(attendance.getStudentID()) == studentID) {
              cout << "Absents: " << attendance.getAbsents() << "\n";
              cout << "Lates: " << attendance.getLates() << "\n";
-             cout << "-------------------------\n";
+             cout << "--------------------------------------\n";
             return;
         }
     }
@@ -146,7 +151,7 @@ class Student : public Account {
             cout << "Additional Fees: " << commitment.getAdditionalFees() << "\n";
             cout << "Paid Amount: " << commitment.getPaidAmount() << "\n";
             cout << "Payment Deadline: " << commitment.getPaymentDeadline() << "\n";
-            cout << "-------------------------\n";
+            cout << "-----------------------------------------------------------\n";
             return; 
         }
     }
@@ -162,11 +167,12 @@ class Student : public Account {
     for (auto& student : studentEntries) {
         if (to_string(student.getStudentID()) == studentID) {
             cout << "Name: " << student.getName() << "\n";
+            cout << "Section: " << student.getSection() << "\n";
             cout << "Age: " << student.getAge() << "\n";
             cout << "Contact Number: " << student.getContact() << "\n";
             cout << "Address: " << student.getAddress() << "\n";
             cout << "Email Address: " << student.getEmailAddress() << "\n";
-            cout << "-------------------------\n";
+            cout << "--------------------------------------------------\n";
             return; 
         }
     }
@@ -184,35 +190,32 @@ class Student : public Account {
 
                 cout << "Editing Student Information for Student ID " << studentID << ":\n";
 
-                cout << "Enter new name (leave blank to keep current): ";
-                getline(cin, newName);
-                if (!newName.empty()) {
-                    student.setName(newName);
-                }
-
-                cout << "Enter new age (enter -1 to keep current): ";
-                cin >> newAge;
-                if (newAge != -1) {
-                    student.setAge(newAge);
-                }
-                cin.ignore(); // To handle newline after integer input
-
-                cout << "Enter new contact number (leave blank to keep current): ";
+                
+               do {
+                cout << "Enter new contact number (format: 123-456-7890, leave blank to keep current): ";
                 getline(cin, newContact);
-                if (!newContact.empty()) {
-                    student.setContact(newContact);
+
+                if (newContact.empty()) {
+                    break; 
                 }
+
+                if (newContact.length() == 12 &&
+                    newContact[3] == '-' &&
+                    newContact[7] == '-' &&
+                    checkStrDigit(newContact.substr(0, 3)) &&
+                    checkStrDigit(newContact.substr(4, 3)) &&
+                    checkStrDigit(newContact.substr(8, 4))) {
+                    student.setContact(newContact);
+                    break; 
+                } else {
+                    cout << "Invalid contact number format. Please try again.\n";
+                }
+            } while (true);
 
                 cout << "Enter new address (leave blank to keep current): ";
                 getline(cin, newAddress);
                 if (!newAddress.empty()) {
                     student.setAddress(newAddress);
-                }
-
-                cout << "Enter new email address (leave blank to keep current): ";
-                getline(cin, newEmail);
-                if (!newEmail.empty()) {
-                    student.setEmailAddress(newEmail);
                 }
 
                 cout << "Information successfully updated.\n";

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -389,7 +390,72 @@ class Admin : Account{
         }
         
         void assignFaculty() {
-            
+            clearScreen();
+
+            ifstream fin;
+
+            fin.open("MA2_Teacher-Subject-DB - Sheet1.csv", ios::in);
+
+            if (!fin.is_open()) {
+                cerr << "Error! Unable to open assigned teachers database file" << endl;
+                return; // Error - File I/O is not working
+            }
+
+            bool isEditSubject;
+            string faculty;
+            string edit;
+            string line;
+            string subjects[] = {
+                "English",
+                "Science",
+                "Mathematics",
+                "Filipino",
+                "Social Studies",
+                "CLCE",
+                "TLE",
+                "MAPEH"
+            };
+
+            cout << "Do you want to change the assigned subject or the assigned section?" << endl;
+            cout << "[1] Subject" << endl;
+            cout << "[2] Section" << endl;
+            cout << "[3] Cancel editing" << endl;
+            cout << "Type your choice here: ";
+
+            switch(inputMenu(3)) {
+                case -1: case 3:
+                    return;
+                case 1:
+                    isEditSubject = true;
+                    break;
+                case 2:
+                    isEditSubject = false;
+                    break;
+            }
+
+            cout << "What is the faculty ID of the faculty you want to assign?" << endl;
+            cin >> faculty;
+
+            getline(fin, line);
+
+            while (getline(fin, line)) {
+                string getFacultyID, getSection, getSubject;
+                stringstream s(line);
+
+                getline(s, getFacultyID, ',');
+                getline(s, getSection, ',');
+                getline(s, getSubject, ',');
+
+
+                if (getFacultyID == faculty) {
+                    cout << "What is the new " << (isEditSubject ? "subject " : "section" ) << "of " << faculty << ": ";
+                    cin >> faculty;
+
+                    if (!isEditSubject) {
+                        // NOT DONE
+                    }
+                }   
+            }            
         }
         
         void updateStudentInfo() {
@@ -584,7 +650,7 @@ class Admin : Account{
                         displayStudents();
                         break;
                     case 12:
-                        // logout();
+                        logout();
                         return;
                 }
             }

@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include "Database.h"
-#include "Faculty.h"
+#include "Students.h"
 #include "Users.h"
 
 using namespace std;
@@ -12,7 +12,7 @@ using namespace std;
 Database* Database::instance = nullptr;
 
 int main() {
-    Faculty faculty("Faculty201");
+    Student student("2022515689");
 
-    faculty.menu();
+    student.menu();
 }
