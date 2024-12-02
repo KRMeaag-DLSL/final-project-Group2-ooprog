@@ -2,7 +2,7 @@
     "files.associations": {
         "*.cs": "csharp",
         "iostream": "cpp",
-        "xstring": "cpp",
-        "vector": "cpp"
+        "iomanip": "cpp",
+        "ios": "cpp"
     }
 }

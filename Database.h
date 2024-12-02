@@ -134,6 +134,7 @@ class Attendance {
         int lates;
     public:
         Attendance(int id, int a, int l) : studentID(id), absents(a), lates(l) {}
+        Attendance() {}
         int getStudentID() { return studentID;}
         int getAbsents() { return absents;}
         int getLates() { return lates;}
@@ -272,7 +273,7 @@ class Database {
             switch(type) {
                 case 1: {
                     cout << "Hello" << endl;
-                    fout << "Student-ID,Name,Age,Contact,Address,Email Address,Department\n";
+                    fout << "Student-ID,Section,Name,Age,Contact,Address,Email Address,Department\n";
                     for (auto& student : studentEntries) {
                         fout << student.getStudentID() << "," << student.getSection() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
                         << "," << student.getAddress() << "," << student.getEmailAddress() << "," << student.getDepartment() << "\n";

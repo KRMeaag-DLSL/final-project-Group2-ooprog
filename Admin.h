@@ -521,6 +521,23 @@ class Admin : Account{
             return;
         }
 
+        bool logout() {
+            string choice;
+
+            clearScreen();
+            while (true) {
+                cout << "\nAre you sure you want to log out? [Y/N]: ";
+                cin >> choice;
+                if (choice.length() != 1 || (toupper(choice[0]) != 'Y' && toupper(choice[0]) != 'N')) {
+                    cout << "\nInvalid input, please try again!" << endl;
+                } else if (toupper(choice[0]) == 'Y') {
+                    return true; // User logged out
+                } else if (toupper(choice[0]) == 'N') {
+                    return false; // User did not choose to log-out
+                }
+            }
+        }
+
         void menu() override {
             int choice;
             bool loopMenu = true;
@@ -584,8 +601,8 @@ class Admin : Account{
                         displayStudents();
                         break;
                     case 12:
-                        // logout();
-                        return;
+                        if (logout()) return;
+                        break;
                 }
             }
         }
