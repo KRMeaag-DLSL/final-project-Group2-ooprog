@@ -16,7 +16,16 @@ class Student : public Account {
     string section;
 
     public:
-        Student(string studentID, string section) : studentID(studentID), section(section){}
+        Student(string studentIDInput) : studentID((studentIDInput)), section("Default") {
+            Database* db = Database::getInstance();
+            vector<StudentEntry>& entries = db->getStudentEntries();
+
+            for (auto& entry : entries) {
+                if (entry.getStudentID() == stoi(studentIDInput)) {
+                    section = entry.getSection();
+                }
+            }
+        }
     
     string getStudentID(){
         return studentID;
@@ -41,7 +50,7 @@ class Student : public Account {
             // Main Menu
             while (loopMenu) {
                 clearScreen();
-                cout << "Good day, " << studentID << "! Please pick from the following:" << endl;
+                cout << "Good day, " << studentID << ", from section " << section << "! Please pick from the following:" << endl;
 
                 cout << "[1] Display Student Grades" << endl;
                 cout << "[2] Display Student Deadlines" << endl;
@@ -74,7 +83,8 @@ class Student : public Account {
                         editStudentInformation();
                         break;
                     case 7:
-                        return;
+                        if(logout());
+                            return;
                         break;
                 }
             }
@@ -103,23 +113,31 @@ class Student : public Account {
     }
 
     void displayStudentDeadlines(){
+        clearScreen();
         Database* db = Database::getInstance();
-         auto& deadline = db->getDeadlines();
+        auto& deadline = db->getDeadlines();
+        bool foundEntry = false;
 
-        cout << "Deadlines for Student ID " << studentID << ":\n";
+        cout << "Deadlines under your section " << section << ":\n";
        
         for (auto& deadline : db->getDeadlines()) {
             if (deadline.getSection() == section) {
+                foundEntry = true;
                 cout << "Section: " << deadline.getSection() << "\n";
                 cout << "Deadline Date: " << deadline.getDeadlineDate() << "\n";
                 cout << "Subject: " << deadline.getSubject() << "\n";
                 cout << "----------------------------------------\n";
-                return;
             }
         }
         
+        if (!foundEntry) {
             cout << "No deadlines found for Student ID " << studentID << ".\n";
-     
+            continueToNext();
+            return;
+        }
+
+        continueToNext();
+        return;
     }
 
     void displayStudentAttendance(){
