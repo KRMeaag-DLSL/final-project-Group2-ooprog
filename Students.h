@@ -16,23 +16,21 @@ class Student : public Account {
     string section;
 
     public:
-        Student(string studentID, string section) : studentID(studentID), section(section){}
+        Student(string studentID) : studentID(studentID){ }
     
+    //function that will look for the section in the database using the StudentID* 
+
     string getStudentID(){
         return studentID;
     }
 
-    string getSection(){
-        return section;
-    }
+    
 
     void setStudentID(){
         this->studentID = studentID;
     }
 
-    void setSection(){
-        this->section = section;
-    }
+    
 
     void menu() override {
     int choice;
@@ -52,9 +50,13 @@ class Student : public Account {
                 cout << "[7] Log-out" << endl;
 
                 cout << "Type your choice: ";
-                switch (inputMenu(7)) {
-                    case -1:
-                        continue;
+
+                choice = inputMenu(7);
+
+                if (choice == -1) {
+                    continue;
+                }
+                switch (choice) {
                     case 1:
                         displayStudentGrades();
                         break;

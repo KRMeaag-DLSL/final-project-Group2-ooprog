@@ -171,7 +171,10 @@ class Database {
     
     public:
         static Database* getInstance() {
-            return ((instance == nullptr) ? new Database() : instance);
+            if (instance == nullptr) {
+                instance = new Database();
+            }
+            return instance;
         }
 
         void searchEntry(string studentID) {}
@@ -181,6 +184,7 @@ class Database {
         vector<Deadline>& getDeadlines() { return deadlines;}
         vector<Attendance>& getAttendance() { return attendance;}
         vector<FinancialCommitment>& getFinancialCommitments() { return financialCommitments;}
+        void addStudentEntry(StudentEntry& entry) { studentEntries.push_back(entry);}
 
         void getRowFromFile(ifstream& fin, vector<string>& row, string line, string word) {
             row.clear();
@@ -267,6 +271,7 @@ class Database {
 
             switch(type) {
                 case 1: {
+                    cout << "Hello" << endl;
                     fout << "Student-ID,Name,Age,Contact,Address,Email Address,Department\n";
                     for (auto& student : studentEntries) {
                         fout << student.getStudentID() << "," << student.getSection() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
@@ -285,7 +290,7 @@ class Database {
                 case 3: {
                     fout << "Priority,Section,Deadline Date,Subject\n";
                     for (auto& deadline : deadlines) {
-                        fout << deadline.getPriority() << "," << deadline.getSection() << "," << deadline.getDeadlineDate() << "," << deadline.getSubject() << "," << "\n";
+                        fout << deadline.getPriority() << "," << deadline.getSection() << "," << deadline.getDeadlineDate() << "," << deadline.getSubject() << "\n";
                     }
                     break;
                 }

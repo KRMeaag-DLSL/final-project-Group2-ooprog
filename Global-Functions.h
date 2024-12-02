@@ -30,7 +30,7 @@ inline int inputMenu(int maxOption) {
         if (!isdigit(strInput[0])) {
             throw string("\nInput is either a negative or not an integer, please try again!");
         }
-        else if (strInput.length() != 1) {
+        else if (strInput.length() > 2) {// I changed it cuz my menus is more than one digit
             throw string("\nInput is invalid, please try again!");
         }
         else if (atoi(&strInput[0]) < 1 || atoi(&strInput[0]) > maxOption) {
