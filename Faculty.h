@@ -444,6 +444,7 @@ class Faculty : public Account {
 
         void updateAttendance() {
             Database* db = Database::getInstance();
+            vector<StudentEntry>& student = db->getStudentEntries();
             vector<Attendance>& attendance = db->getAttendance();
 
             int searchID;
@@ -451,6 +452,7 @@ class Faculty : public Account {
             bool isEditAbsent;
             bool isIncrease;
             double input;
+            int foundStudentID;
             int days;
             
             clearScreen();
@@ -467,6 +469,11 @@ class Faculty : public Account {
             for (int i = 0; i < attendance.size(); i++) {
                 if (attendance[i].getStudentID() == searchID) {
                     keyDatabase = i;
+                    if (student[keyDatabase].getSection() != assignedSection) {
+                        cout << "\nYou do not have permissions to edit this student since they are not in your section. Please try again." << endl;
+                        continueToNext();
+                        return;
+                    }
                 }
             }
 
@@ -476,7 +483,7 @@ class Faculty : public Account {
                 continueToNext();
                 return;
             }
-
+            
             cout << "\nEntry found! Attendance records of student:" << attendance[keyDatabase].getStudentID() << endl;
             cout << "Absents: " << attendance[keyDatabase].getAbsents() << endl;
             cout << "Lates: " << attendance[keyDatabase].getLates() << endl;

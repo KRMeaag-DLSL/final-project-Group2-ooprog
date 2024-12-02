@@ -44,8 +44,6 @@ class Admin : Account{
             // cout << "Enter Deadline Of Tuition: ";
             // getline(cin, tuitionDeadline);
             Database* db = Database::getInstance();
-            db->getStudentEntries().push_back(
-                StudentEntry(0,"section","name",0,"contact","address","emailAddress","department"));
             // Database::getInstance()->getStudentEntries().push_back(StudentEntry(id,section,name,age,contact,address,emailAddress,department));
             // Database::getInstance()->getAttendance().push_back(Attendance(id, 0, 0));
             // Database::getInstance()->getFinancialCommitments().push_back(FinancialCommitment(id, tuition, 0, 0, tuitionDeadline));
