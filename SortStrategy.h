@@ -1,35 +1,45 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
+#include "Database.h"
 
 using namespace std;
 
 class SortStrategy {
     public:
-        virtual void sort(vector<int>& data) = 0;
+        virtual void sortData(vector<int>& data) = 0;
 };
 
-class BalanceSort : SortStrategy {
+class BalanceSort : public SortStrategy {
     public:
-        void sort(vector<int>& data) override {}
+        void sortData(vector<int>& data) override {}
 };
 
-class IDSort : SortStrategy {
+class IDSort : public SortStrategy {
     public:
-        void sort(vector<int>& data) override {}
+        void sortData(vector<int>& data) override {}
 };
 
-class GradesSort : SortStrategy {
+class GradesSort : public SortStrategy {
     public:
-        void sort(vector<int>& data) override {}
+        void sortData(vector<int>& data) override {}
 };
 
-class AttendanceSort : SortStrategy {
+class AttendanceSort : public SortStrategy {
     public:
-        void sort(vector<int>& data) override {
-            
+        void sortData(vector<int>& data) override {
+            sort(data.begin(), data.end(), [](int a, int b) {
+                Attendance attendanceA, attendanceB;
+                for (Attendance attendance : Database::getInstance()->getAttendance()) {
+                    if (attendance.getStudentID() == a) attendanceA = attendance;
+                    else if (attendance.getStudentID() == b) attendanceB = attendance;
+                }
 
-
-
+                //point system
+                float valueA = attendanceA.getAbsents() + (attendanceA.getLates()*0.5);
+                float valueB = attendanceB.getAbsents() + (attendanceB.getLates()*0.5);
+                return valueA < valueB;
+            });
         }
 };
 
@@ -38,10 +48,12 @@ class SortContext {
         SortStrategy* strategy;
     
     public:
+        SortContext(SortStrategy* strategy) : strategy(strategy) {}
+
         void setSortStrategy(SortStrategy* strat) {strategy = strat;}
 
         void sortData(vector<int>& data) {
-            strategy->sort(data);
+            strategy->sortData(data);
         }
 
 };
