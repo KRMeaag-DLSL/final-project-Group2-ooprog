@@ -134,7 +134,6 @@ class Attendance {
         int lates;
     public:
         Attendance(int id, int a, int l) : studentID(id), absents(a), lates(l) {}
-        Attendance() {}
         int getStudentID() { return studentID;}
         int getAbsents() { return absents;}
         int getLates() { return lates;}
@@ -259,6 +258,7 @@ class Database {
             }
             fin.close();
         }
+
 
         void saveData(string fileName, int type) {
             // File pointer

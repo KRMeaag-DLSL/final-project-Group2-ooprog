@@ -16,8 +16,10 @@ class Student : public Account {
     string section;
 
     public:
-        Student(string studentID) : studentID(studentID){ }
-    
+        Student(string studentID) : studentID(studentID){ 
+            
+        
+        }
     //function that will look for the section in the database using the StudentID* 
 
     string getStudentID(){
@@ -39,7 +41,7 @@ class Student : public Account {
             // Main Menu
             while (loopMenu) {
                 clearScreen();
-                cout << "Good day, " << studentID << "! Please pick from the following:" << endl;
+                cout << "Good day, " << studentID << " from Section " << section << "Please pick from the following:" << endl;
 
                 cout << "[1] Display Student Grades" << endl;
                 cout << "[2] Display Student Deadlines" << endl;
@@ -106,11 +108,11 @@ class Student : public Account {
 
     void displayStudentDeadlines(){
         Database* db = Database::getInstance();
-         auto& deadline = db->getDeadlines();
+         auto& deadlines = db->getDeadlines();
 
         cout << "Deadlines for Student ID " << studentID << ":\n";
        
-        for (auto& deadline : db->getDeadlines()) {
+        for (auto& deadline : deadlines) {
             if (deadline.getSection() == section) {
                 cout << "Section: " << deadline.getSection() << "\n";
                 cout << "Deadline Date: " << deadline.getDeadlineDate() << "\n";
