@@ -50,10 +50,12 @@ class Account {
 
                     *accountID = checkUser;
 
+                    fin.close();
                     return 0; // No errors
                 }
             }
 
+            fin.close();
             clearScreen();
             cout << "\nLogin failed. Please check your username and password." << endl;
             continueToNext();
