@@ -1,5 +1,5 @@
-Student-ID,Name,Age,Contact,Address,Email Address,Department
-2022515689,BM105,Alice Johnson,20,123-456-7890,"123_Elm_St Springfield",alice.johnson@email.com,GS
+Student-ID,Section, Name,Age,Contact,Address,Email Address,Department
+2022515689,BM105,Alice Johnson,20,123-456-7890,"123 Elm St Springfield",alice.johnson@email.com,GS
 2022394915,BM202,Ben Carter,22,987-654-3210,"456 Oak Rd Riverdale",ben.carter@email.com,JHS
 2020394453,CMR204,Clara Smith,19,555-123-4567,"789 Pine Ave Maple City",clara.smith@email.com,JHS
 2024178625,CMR207,Daniel Brown,21,444-987-1234,"101 Birch Ln Hillside",daniel.brown@email.com,GS

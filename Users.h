@@ -1,4 +1,5 @@
 #pragma once
+#include <cctype>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -39,8 +40,6 @@ class Account {
                 getline(s,userType, ',');
 
                 if (username == checkUser && password == checkPassword) {
-                    cout << "Login successful!" << endl;
-
                     if (userType == "Admin") {
                         *accountType = 0; // User Type 0 Means Admin
                     } else if (userType == "Faculty") {
@@ -61,7 +60,22 @@ class Account {
             return 2; // Error - Incorrect Credentials
         }
 
-        void logout() {}
+        bool logout() {
+            string choice;
+
+            clearScreen();
+            while (true) {
+                cout << "\nAre you sure you want to log out? [Y/N]: ";
+                cin >> choice;
+                if (choice.length() != 1 || (toupper(choice[0]) != 'Y' && toupper(choice[0]) != 'N')) {
+                    cout << "\nInvalid input, please try again!" << endl;
+                } else if (toupper(choice[0]) == 'Y') {
+                    return true; // User logged out
+                } else if (toupper(choice[0]) == 'N') {
+                    return false; // User did not choose to log-out
+                }
+            }
+        }
 
         virtual void menu() {}
 };

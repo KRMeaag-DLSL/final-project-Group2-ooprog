@@ -92,38 +92,212 @@ class Faculty : public Account {
                         createDisciplinaryRecord();
                         break;
                     case 6:
-                        return;
-                        // logout();
+                        if (logout()) {
+                            return;
+                        }
                         break;
                 }
             }
         }
 
         void createDeadline() {
-            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
-        }
-
-        void updateDeadline() {
-            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
-        }
-
-        void deleteDeadline() {
-            vector<Deadline>& deadlines = Database::getInstance()->getDeadlines();
-        }
-
-        void deadlineSubMenu() {
             Database* db = Database::getInstance();
             vector<Deadline>& deadlines = db->getDeadlines();
+            string date;
+            int priority;
 
-            for (auto& deadline : deadlines) {
-                cout << deadline.getSection() << endl;
-                cout << deadline.getDeadlineDate() << endl;
-                cout << deadline.getSubject() << endl;
-                cout << "\nNext Entry" << endl;
+            clearScreen();
+            cout << "\nWhat is the date of your new deadline?" << endl;
+            cout << "Type here (MM/DD/YYYY): ";
+
+            date = inputDate(true);
+            if (date == "INVALID_ERROR!") {
+                return;
             }
+
+            cout << "What is the priority of your new deadlne?: ";
+            priority = inputMenu(3);
+
+            if (priority == -1){
+                return;
+            }
+
+            deadlines.push_back(Deadline(priority, assignedSection, date, currentSubject));
+
+            db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
+            cout << "\nNew deadline set successfully!" << endl;
+            cout << "Details: " << endl;
+            cout << "Date - " << date << endl;
+            cout << "Priority - " << priority << endl;
 
             cout << endl;
             continueToNext();
+        }
+
+        void updateDeadline() {
+            Database* db = Database::getInstance();
+            vector<Deadline>& deadlines = db->getDeadlines();
+            const int WIDTH = 25;
+            string date;
+            int priority;
+            int chosenUpdate;
+
+            clearScreen();
+            cout << "Deadlines assigned to " << assignedSection << " under your subject, " << currentSubject << endl;
+
+            cout << left << setw(WIDTH) << "\nPriority" << setw(WIDTH) << "Deadline Date" << endl;
+            
+            // Display Data
+            for (auto& deadline : deadlines) {
+                if (deadline.getSection() == assignedSection && deadline.getSubject() == currentSubject) {
+                    cout << left << setw(WIDTH) << deadline.getPriority() << setw(WIDTH)
+                    << deadline.getDeadlineDate() << endl;
+                }                
+            }
+
+            // Input Search Key
+            cout << "\nWhich date will you update? (Input the date and priority)" << endl;
+            cout << "Type here (MM/DD/YYYY): ";
+
+            date = inputDate(false);
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
+            
+            cout << "Type the priority of the entry you want to update: ";
+            priority = inputMenu(3);
+
+            if (priority == -1) {
+                return;
+            }
+
+            // Find and Update
+            for (auto& deadline : deadlines) {
+                if (deadline.getSection() == assignedSection 
+                && deadline.getSubject() == currentSubject
+                && deadline.getDeadlineDate() == date
+                && deadline.getPriority() == priority) {
+                    cout << "\nWhich one will you update?" << endl;
+                    cout << "[1] Priority" << endl;
+                    cout << "[2] Deadline Date" << endl;
+                    cout << "Type the number of your choice: ";
+                    switch (inputMenu(2)) {
+                        case -1:
+                            return;
+                        case 1:
+                            cout << "Type the new priority of " << deadline.getDeadlineDate() << ": ";
+                            if (!inputIntNum(&priority)) {
+                                return;
+                            }
+                            deadline.setPriority(priority);
+                            db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
+
+                            cout << "\nNew priority of " << deadline.getDeadlineDate() << " set successfully!" << endl;
+                            cout << endl;
+                            continueToNext();
+                            return;
+                        case 2:
+                            cout << "Type the new date of " << deadline.getDeadlineDate() << " (MM/DD/YYYY): ";
+                            date = inputDate(true);
+                            if (date == "INVALID_ERROR!") {
+                                return;
+                            }
+                            deadline.setDeadlineDate(date);
+                            db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
+
+                            cout << "\nNew date set successfully!" << endl;
+                            cout << endl;
+                            continueToNext();
+                            return;
+                    }
+                }                
+            }
+
+            cout << "\nPriority or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
+            continueToNext();
+        }
+
+        void deleteDeadline() {
+            Database* db = Database::getInstance();
+            vector<Deadline>& deadlines = db->getDeadlines();
+            const int WIDTH = 25;
+            string date;
+            int priority;
+
+            clearScreen();
+            cout << "Deadlines assigned to " << assignedSection << " under your subject, " << currentSubject << endl;
+
+            cout << left << setw(WIDTH) << "\nPriority" << setw(WIDTH) << "Deadline Date" << endl;
+            
+            // Display Data
+            for (auto& deadline : deadlines) {
+                if (deadline.getSection() == assignedSection && deadline.getSubject() == currentSubject) {
+                    cout << left << setw(WIDTH) << deadline.getPriority() << setw(WIDTH)
+                    << deadline.getDeadlineDate() << endl;
+                }                
+            }
+
+            cout << "\nWhich date will you delete? (Input the date and priority)" << endl;
+            cout << "Type the date of the entry you want to delete (MM/DD/YYYY): ";
+            date = inputDate(false);
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
+            cout << "Type the priority of the entry you want to delete: ";
+            priority = inputMenu(3);
+
+            if (priority == -1) {
+                return;
+            }
+
+            for (int i = 0; i < deadlines.size(); i++) {
+                if (deadlines[i].getSection() == assignedSection 
+                && deadlines[i].getSubject() == currentSubject
+                && deadlines[i].getDeadlineDate() == date
+                && deadlines[i].getPriority() == priority) {
+                    deadlines.erase(deadlines.begin() + i);
+                    db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
+                    cout << "\nEntry deleted successfully!" << endl;
+                    continueToNext();
+                    return;
+                }                
+            }
+
+            cout << "\nPriority or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
+            continueToNext();
+        }
+
+        void deadlineSubMenu() {
+            int choice;
+            bool loopMenu = true;
+
+            // Student Perf Sub Menu
+            while (loopMenu) {
+                clearScreen();
+                cout << "Options for deadlines:" << endl;
+
+                cout << "[1] Create Deadline" << endl;
+                cout << "[2] Update Deadline" << endl;
+                cout << "[3] Delete Deadline" << endl;
+                cout << "[4] Back to main menu" << endl;
+
+                cout << "Type your choice: ";
+                switch (inputMenu(4)) {
+                    case -1:
+                        continue;
+                    case 1:
+                        createDeadline();
+                        break;
+                    case 2:
+                        updateDeadline();
+                        break;
+                    case 3:
+                        deleteDeadline();
+                        break;
+                    case 4:
+                        return;
+                }
+            }
         }
 
         void searchStudent() {
@@ -155,7 +329,6 @@ class Faculty : public Account {
                     cout << "Student Name: " << student.getName() << endl;
                     cout << "Student Age: " << student.getAge() << endl;
                     cout << "Student Contact: " << student.getContact() << endl;
-                    cout << "Student Address: " << student.getAddress() << endl;
                     cout << "Student Email Address: " << student.getEmailAddress() << endl;
                     cout << "Student Department: " << student.getDepartment() << endl << endl;
 
@@ -436,8 +609,11 @@ class Faculty : public Account {
                     }
 
                     cout << "\nWhat is the date of officially recording this offense?" << endl;
-                    cout << "Type date here [MM/DD/YYYY]: ";
-                    cin >> date;
+                    cout << "Type here (MM/DD/YYYY): ";
+                    date = inputDate(true);
+                    if (date == "INVALID_ERROR!") {
+                        return;
+                    }
 
                     records.push_back(Record(searchID, offense, severity, date));
 
@@ -455,20 +631,22 @@ class Faculty : public Account {
             return;            
         }
 
-        void displayStudentList() {
+        void displayStudentList() { // NOTE: BUGGED SINCE IT DOESN'T DISPLAY STUDENT IDs
             vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
             const int WIDTH = 25;
 
             cout << "Displaying student entries under your assigned section" << endl;
 
-            cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
+            cout << "Student ID #1 " << students[0].getStudentID() << endl; // Test function to be deleted
+
+            cout << left << setw(WIDTH) << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
             
             for (auto& student : students) {
                 if (assignedSection == student.getSection()) {
-                    cout << student.getStudentID() << setw(WIDTH) 
-                    << student.getSection() << setw(WIDTH) 
-                    << student.getName() << setw(WIDTH) 
-                    << student.getDepartment() << endl;
+                    cout << left << setw(WIDTH) << student.getStudentID() 
+                    << setw(WIDTH) << student.getSection() 
+                    << setw(WIDTH) << student.getName() 
+                    << setw(WIDTH) << student.getDepartment() << endl;
                 }
             }
 
