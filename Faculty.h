@@ -638,19 +638,20 @@ class Faculty : public Account {
             return;            
         }
 
-        void displayStudentList() { // NOTE: BUGGED SINCE IT DOESN'T DISPLAY STUDENT IDs
+        void displayStudentList() {
             vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
             const int WIDTH = 25;
 
-            cout << "Displaying student entries under your assigned section" << endl;
+            cout << "Displaying student entries under your assigned section:\n" << endl;
 
-            cout << "Student ID #1 " << students[0].getStudentID() << endl; // Test function to be deleted
-
-            cout << left << setw(WIDTH) << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
+            cout << left << setw(WIDTH) << "Student ID" 
+            << setw(WIDTH) << "Section" 
+            << setw(WIDTH) << "Name" 
+            << setw(WIDTH) << "Department" << endl;
             
             for (auto& student : students) {
                 if (assignedSection == student.getSection()) {
-                    cout << left << setw(WIDTH) << student.getStudentID() 
+                    cout << left << setw(WIDTH) << student.getSection()
                     << setw(WIDTH) << student.getSection() 
                     << setw(WIDTH) << student.getName() 
                     << setw(WIDTH) << student.getDepartment() << endl;
