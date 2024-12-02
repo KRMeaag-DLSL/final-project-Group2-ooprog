@@ -22,7 +22,34 @@ class IDSort : public SortStrategy {
 
 class GradesSort : public SortStrategy {
     public:
-        void sortData(vector<int>& data) override {}
+        void sortData(vector<int>& data) override {
+            sort(data.begin(), data.end(), [](int a, int b) {
+                Grade gradeA, gradeB;
+                for (Grade grade : Database::getInstance()->getGrades()) {
+                    if (grade.getStudentID() == a) gradeA = grade;
+                    else if (grade.getStudentID() == b) gradeB = grade;
+                }
+
+                //point system
+                double valueA = (gradeA.getEnglish() + 
+                            gradeA.getMath() + 
+                            gradeA.getScience() + 
+                            gradeA.getSocStud() + 
+                            gradeA.getFilipino() + 
+                            gradeA.getTLE() + 
+                            gradeA.getCLCE() + 
+                            gradeA.getMAPEH())/8;
+                float valueB = (gradeB.getEnglish() + 
+                            gradeB.getMath() + 
+                            gradeB.getScience() + 
+                            gradeB.getSocStud() + 
+                            gradeB.getFilipino() + 
+                            gradeB.getTLE() + 
+                            gradeB.getCLCE() + 
+                            gradeB.getMAPEH())/8;
+                return valueA > valueB;
+            });
+        }
 };
 
 class AttendanceSort : public SortStrategy {
