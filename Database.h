@@ -59,24 +59,21 @@ class Record {
 
 class Deadline {
     private:
-        int studentID;
-        string name;
-        int daysUntilDeadlines;
+        int priority;
+        string section;
         string deadlineDate;
         string subject;
     public:
-        Deadline(int id, string n, int dUD, string dLD, string s) 
-        : studentID(id), name(n), daysUntilDeadlines(dUD), deadlineDate(dLD), subject(s) {}
-        int getStudentID() { return studentID;}
-        string getName() { return name;}
-        int getDaysUntilDeadlines() { return daysUntilDeadlines;}
+        Deadline(int priority,string section, string dLD, string s) 
+        : priority(priority), section(section), deadlineDate(dLD), subject(s) {}
+        int getPriority() { return priority;}
+        string getSection() { return section;}
         string getDeadlineDate() { return deadlineDate;}
         string getSubject() { return subject;}
-        void setStudentID(int id) {studentID = id;}
-        void setName(string n) {name = n;}
-        void setDaysUntilDeadlines(int dUD) {daysUntilDeadlines = dUD;}
+        void setPriority(int p) { priority = p;}
         void setDeadlineDate(string dLD) {deadlineDate = dLD;}
         void setSubject(string s) {subject = s;}
+        void setSection(string input) {section = input;}
 };
 
 class Grade {
@@ -192,7 +189,6 @@ class Database {
             while (getline(s, word, ',')) {
                 row.push_back(word);
             }
-
         }
 
         void loadData(string fileName, int type) {
@@ -226,8 +222,7 @@ class Database {
                         break;
                     }
                     case 3: {
-                        int daysUntilDeadline =  stoi(row[2]);
-                        deadlines.push_back(Deadline(id, row[1], daysUntilDeadline, row[3], row[4]));
+                        deadlines.push_back(Deadline(stoi(row[0]), row[1], row[2], row[3]));
                         break;
                     }
                     case 4: {
@@ -288,10 +283,9 @@ class Database {
                     break;
                 }
                 case 3: {
-                    fout << "Student-ID,Name,Days until the Deadline,Deadline Date,Subject\n";
+                    fout << "Priority,Section,Deadline Date,Subject\n";
                     for (auto& deadline : deadlines) {
-                        fout << deadline.getStudentID() << "," << deadline.getName() << "," << deadline.getDaysUntilDeadlines() << "," <<
-                        deadline.getDeadlineDate() << "," << deadline.getSubject() << "\n";
+                        fout << deadline.getPriority() << "," << deadline.getSection() << "," << deadline.getDeadlineDate() << "," << deadline.getSubject() << "," << "\n";
                     }
                     break;
                 }

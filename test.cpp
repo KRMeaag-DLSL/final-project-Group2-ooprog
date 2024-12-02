@@ -14,5 +14,5 @@ Database* Database::instance = nullptr;
 int main() {
     Student student("2022515689");
 
-    student.editStudentInformation();
+    student.menu();
 }

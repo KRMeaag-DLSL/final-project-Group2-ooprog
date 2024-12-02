@@ -13,16 +13,25 @@ using namespace std;
 class Student : public Account {
     private:
     string studentID;
+    string section;
 
     public:
-        Student(string studentID) : studentID(studentID) {}
+        Student(string studentID, string section) : studentID(studentID), section(section){}
     
     string getStudentID(){
         return studentID;
     }
 
+    string getSection(){
+        return section;
+    }
+
     void setStudentID(){
         this->studentID = studentID;
+    }
+
+    void setSection(){
+        this->section = section;
     }
 
     void menu() override {
@@ -42,7 +51,7 @@ class Student : public Account {
                 cout << "[6] Edit Student Information" << endl;
                 cout << "[7] Log-out" << endl;
 
-
+                cout << "Type your choice: ";
                 switch (inputMenu(7)) {
                     case -1:
                         continue;
@@ -100,12 +109,11 @@ class Student : public Account {
         cout << "Deadlines for Student ID " << studentID << ":\n";
        
         for (auto& deadline : db->getDeadlines()) {
-            if (to_string(deadline.getStudentID()) == studentID) {
-                cout << "Name: " << deadline.getName() << "\n";
-                cout << "Days until the Deadline: " << deadline.getDaysUntilDeadlines() << "\n";
+            if (deadline.getSection() == section) {
+                cout << "Section: " << deadline.getSection() << "\n";
                 cout << "Deadline Date: " << deadline.getDeadlineDate() << "\n";
                 cout << "Subject: " << deadline.getSubject() << "\n";
-                cout << "-------------------------\n";
+                cout << "----------------------------------------\n";
                 return;
             }
         }
@@ -182,9 +190,15 @@ class Student : public Account {
 
                 cout << "Editing Student Information for Student ID " << studentID << ":\n";
 
-                 cout << "Enter new contact number (format: 123-456-7890, leave blank to keep current): ";
-                 getline(cin, newContact);
-                if (!newContact.empty()) {
+                
+               do {
+                cout << "Enter new contact number (format: 123-456-7890, leave blank to keep current): ";
+                getline(cin, newContact);
+
+                if (newContact.empty()) {
+                    break; 
+                }
+
                 if (newContact.length() == 12 &&
                     newContact[3] == '-' &&
                     newContact[7] == '-' &&
@@ -192,10 +206,11 @@ class Student : public Account {
                     checkStrDigit(newContact.substr(4, 3)) &&
                     checkStrDigit(newContact.substr(8, 4))) {
                     student.setContact(newContact);
+                    break; 
                 } else {
-                    cout << "Invalid contact number format. Keeping the current one.\n";
+                    cout << "Invalid contact number format. Please try again.\n";
                 }
-            }
+            } while (true);
 
                 cout << "Enter new address (leave blank to keep current): ";
                 getline(cin, newAddress);

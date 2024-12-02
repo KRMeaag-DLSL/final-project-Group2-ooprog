@@ -117,7 +117,7 @@ inline bool inputDoubleNum(double* num) {
 
 // For int numbers that do not allow negative numbers, changes made using num ptr
 inline bool inputIntNum(int* num) {
-        string numStr;
+    string numStr;
     try {
         cin >> numStr;
         if (!checkStrDigit(numStr)) {
@@ -139,4 +139,84 @@ inline bool inputIntNum(int* num) {
     }
 
     return false;
+}
+
+inline int checkDate(string input) {
+    int slashCtr = 0;
+    int digitCtr = 0;
+
+    if (input.length() != 10) {
+        return 1;
+    }
+
+    if (input[2] != '/' || input[5] != '/') {
+        return 1;
+    }
+
+    for (int i = 0; i < input.length(); i++) {
+        if (input[i] == '/') {
+            slashCtr++;
+        } else if (isdigit(input[i])) {
+            digitCtr++;
+        }
+    }
+
+    if (slashCtr != 2 || digitCtr != 8) {
+        return 1;
+    }
+
+    int month = stoi(input.substr(0, 2));
+    int day = stoi(input.substr(3, 2));
+    int year = stoi(input.substr(6, 4));
+
+    if (month < 1 || month > 12) {
+        return 2;
+    }
+
+    if (day < 1 || day > 31) {
+        return 3;
+    }
+    
+    if (month < 12 && year <= 2024) {
+        return 4;
+    }
+
+    return 0;
+}
+
+// Asks for date input, returns date if no errors and returns "INVALID_ERROR!" if an error occurs
+inline string inputDate(bool isAdding) {
+    string input;
+    try {
+        cin >> input;
+        switch (checkDate(input)) {
+            case 0:
+                return input;
+            case 1:
+                throw string("Input is not a date. Please try again!");
+                break;
+            case 2:
+                throw string("Input does not follow the correct month format (MM/DD/YYYY). Please try again!");
+                break;
+            case 3:
+                throw string("Input's day is invalid. Please try again!");
+                break;
+            case 4:
+                if (isAdding) {
+                    throw string("You are trying to set a deadline in the past. Please try again!");
+                    break;
+                }
+                return input;
+        }
+    } catch (const string& msg) {
+        cout << msg << endl;
+        continueToNext();
+        return "INVALID_ERROR!";
+    } catch (...) {
+        cout << "\nUnknown exception error occured. Please try again!" << endl;
+        continueToNext();
+        return "INVALID_ERROR!";
+    }
+
+    return "???";
 }

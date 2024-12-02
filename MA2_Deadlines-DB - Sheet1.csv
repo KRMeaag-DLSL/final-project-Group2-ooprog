@@ -1,16 +1,17 @@
-Student-ID,Name,Days until the Deadline,Deadline Date,Subject
-2022515689,Alice Johnson,3,11/28/2024,Science
-2022394915,Ben Carter,4,11/29/2024,Mathematics
-2020394453,Clara Smith,5,11/30/2024,English
-2024178625,Daniel Brown,6,12/01/2024,English
-2017566690,Emily Davis,7,12/02/2024,Filipino
-2020476627,Frank Wilson,8,12/03/2024,TLE
-2018650514,Grace Lee,9,12/04/2024,Social Studies
-2024627458,Henry Thomas,10,12/05/2024,Filipino
-2024120883,Ivy Martinez,11,12/06/2024,MAPEH
-2021253392,Jack Robinson,12,12/07/2024,MAPEH
-2022866480,Kelly Anderson,12,12/07/2024,CLCE
-2017352377,Leo Turner,13,12/08/2024,TLE
-2021529203,Mia Perez,14,12/09/2024,Science
-2024129253,Noah Harris,15,12/10/2024,Social Studies
-2017639860,Olivia White,16,12/11/2024,Mathematics
+Priority,Section,Deadline Date,Subject
+1,BM105,11/28/2024,English,
+2,BM202,11/29/2024,Mathematics,
+3,CMR204,11/30/2024,English,
+2,CMR207,12/01/2024,English,
+3,BM105,12/02/2024,Filipino,
+1,BM202,12/03/2024,TLE,
+3,CMR204,12/04/2024,Social Studies,
+3,CMR207,12/05/2024,Filipino,
+3,BM105,12/06/2024,MAPEH,
+2,BM202,12/07/2024,MAPEH,
+2,CMR204,12/07/2024,CLCE,
+2,CMR207,12/08/2024,TLE,
+2,BM105,12/11/2024,English,
+1,BM202,12/10/2024,Social Studies,
+1,CMR204,12/11/2024,Mathematics,
+2,BM105,12/25/2024,English,

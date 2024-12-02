@@ -5,6 +5,7 @@
 #include <sstream>
 #include "Database.h"
 #include "Faculty.h"
+#include "Global-Functions.h"
 #include "Users.h"
 #include "Admin.h"
 
@@ -25,9 +26,8 @@ int main() {
     string accountID; // Used to get account ID after log-in, used to search subject 
                       // assigned to account for faculty acc and student information for students
 
-    clearScreen(); // to be removed once the clearScreen in the while loop is in
     while (true) {
-        // clearScreen(); Slashes to be removed, only added the slashes for bug testing purposes
+        clearScreen();
 
         cout << "\nWelcome to the International State College of the Philippines - Integrated School Student Management System!\n" << endl;
         cout << "Would you like to log-in or exit the program?" << endl;
@@ -46,6 +46,7 @@ int main() {
                 break;
         }
     
+        clearScreen();
         if (user.login(&accountType, &accountID) != 0) {
             continue;
         } else {
@@ -76,11 +77,7 @@ void adminHandler(string accountID) {
 
 void facultyHandler(string accountID) {
     Faculty faculty(accountID);
-    
-
-
-
-    cout << "Faculty much wow" << endl;
+    faculty.menu();
 }
 
 void studentHandler(string accountID) {
