@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Database* Database::instance = nullptr;
+Database* Database::instance;
 
 void adminHandler(string accountID);
 

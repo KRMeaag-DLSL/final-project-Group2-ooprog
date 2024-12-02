@@ -30,7 +30,7 @@ inline int inputMenu(int maxOption) {
         if (!isdigit(strInput[0])) {
             throw string("\nInput is either a negative or not an integer, please try again!");
         }
-        else if (strInput.length() != 1) {
+        else if (strInput.length() > 2) {// I changed it cuz my menus is more than one digit
             throw string("\nInput is invalid, please try again!");
         }
         else if (atoi(&strInput[0]) < 1 || atoi(&strInput[0]) > maxOption) {
@@ -89,9 +89,35 @@ inline int inputStudentID() {
     return 0;
 }
 
-// For numbers that do not allow negative numbers, changes made using num ptr
-inline bool inputNum(double* num) {
+// For double numbers that do not allow negative numbers, changes made using num ptr
+inline bool inputDoubleNum(double* num) {
     string numStr;
+    try {
+        cin >> numStr;
+        if (!checkStrDigit(numStr)) {
+            throw string("\nInput is not an integer, please try again!");
+        } else if (stoi(numStr) < 0) {
+            throw string("\nInput is a negative number, please try again!");
+        } else {
+            *num = stoi(numStr);
+            return true;
+        }
+    } catch (const string& msg) {
+        cout << msg << endl;
+        continueToNext();
+        return false;
+    } catch (...) {
+        cout << "\nUnknown exception error occured. Please try again!" << endl;
+        continueToNext();
+        return false;
+    }
+
+    return false;
+}
+
+// For int numbers that do not allow negative numbers, changes made using num ptr
+inline bool inputIntNum(int* num) {
+        string numStr;
     try {
         cin >> numStr;
         if (!checkStrDigit(numStr)) {
