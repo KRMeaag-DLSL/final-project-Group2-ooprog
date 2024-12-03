@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <ostream>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -17,13 +18,8 @@ class Student : public Account {
 
     public:
         Student(string studentIDInput) : studentID((studentIDInput)), section("Default") {
-            cout << "TEST 1" << endl;
             Database* db = Database::getInstance();
-
-            cout << "TEST 12" << endl;
             vector<StudentEntry>& entries = db->getStudentEntries();
-
-            cout << "TEST 3" << endl;
 
             for (auto& entry : entries) {
                 if (entry.getStudentID() == stoi(studentIDInput)) {
@@ -31,7 +27,6 @@ class Student : public Account {
                 }
             }
 
-            cout << "TEST 4" << endl;
         }
     
     string getStudentID(){
@@ -51,52 +46,50 @@ class Student : public Account {
     }
 
     void menu() override {
-    int choice;
-            bool loopMenu = true;
+        int choice;
+        bool loopMenu = true;
 
-            // Main Menu
-            while (loopMenu) {
-                clearScreen();
-                cout << "TEST 3" << endl;
+        // Main Menu
+        while (loopMenu) {
+            clearScreen();
+            cout << "Good day, " << studentID << ", from section " << section << "! Please pick from the following:" << endl;
 
-                cout << "Good day, " << studentID << ", from section " << section << "! Please pick from the following:" << endl;
+            cout << "[1] Display Student Grades" << endl;
+            cout << "[2] Display Student Deadlines" << endl;
+            cout << "[3] Display Student Attendance" << endl;
+            cout << "[4] Display Payment History" << endl;
+            cout << "[5] Display Student Information" << endl;
+            cout << "[6] Edit Student Information" << endl;
+            cout << "[7] Log-out" << endl;
 
-                cout << "[1] Display Student Grades" << endl;
-                cout << "[2] Display Student Deadlines" << endl;
-                cout << "[3] Display Student Attendance" << endl;
-                cout << "[4] Display Payment History" << endl;
-                cout << "[5] Display Student Information" << endl;
-                cout << "[6] Edit Student Information" << endl;
-                cout << "[7] Log-out" << endl;
-
-                cout << "Type your choice: ";
-                switch (inputMenu(7)) {
-                    case -1:
-                        continue;
-                    case 1:
-                        displayStudentGrades();
-                        break;
-                    case 2:
-                        displayStudentDeadlines();
-                        break;
-                    case 3:
-                        displayStudentAttendance();
-                        break;
-                    case 4:
-                        displayPaymentHistory();
-                        break;
-                    case 5:
-                        displayStudentInformation();
-                        break;
-                    case 6:
-                        editStudentInformation();
-                        break;
-                    case 7:
-                        if(logout())
-                            return;
-                        break;
-                }
+            cout << "Type your choice: ";
+            switch (inputMenu(7)) {
+                case -1:
+                    continue;
+                case 1:
+                    displayStudentGrades();
+                    break;
+                case 2:
+                    displayStudentDeadlines();
+                    break;
+                case 3:
+                    displayStudentAttendance();
+                    break;
+                case 4:
+                    displayPaymentHistory();
+                    break;
+                case 5:
+                    displayStudentInformation();
+                    break;
+                case 6:
+                    editStudentInformation();
+                    break;
+                case 7:
+                    if(logout())
+                        return;
+                    break;
             }
+        }
     }
 
     void displayStudentGrades(){
@@ -120,7 +113,7 @@ class Student : public Account {
                 cout << "---------------------------------------------\n";
             }
 
-    }
+        }
         if(!foundEntry){
             cout << "No grades found for Student ID " << studentID << ".\n";
             continueToNext();
@@ -160,9 +153,9 @@ class Student : public Account {
     }
 
     void displayStudentAttendance(){
-      clearScreen();
-      Database* db = Database::getInstance();
-      auto& attendances = db->getAttendance();
+        clearScreen();
+        Database* db = Database::getInstance();
+        auto& attendances = db->getAttendance();
         bool foundEntry = false;
         cout << "Attendance for Student ID " << studentID << ":\n";
 
@@ -173,7 +166,7 @@ class Student : public Account {
              cout << "Lates: " << attendance.getLates() << "\n";
              cout << "--------------------------------------\n";
         }
-    }
+        }
    
         if(!foundEntry){
         cout << "No attendance records found for Student ID " << studentID << ".\n";
@@ -186,68 +179,134 @@ class Student : public Account {
     }
 
     void displayPaymentHistory(){
-         clearScreen();
-         Database* db = Database::getInstance();
-         auto& financialCommitments = db->getFinancialCommitments();
-         bool foundEntry = false;
-    cout << "Payment History for Student ID " << studentID << ":\n";
+        clearScreen();
+        Database* db = Database::getInstance();
+        auto& financialCommitments = db->getFinancialCommitments();
+        bool foundEntry = false;
+        int balance = 0;
+        int paidAmt = 0;
+        int index = 0;
+
+        cout << "Payment History for Student ID " << studentID << ":\n";
     
-    for (auto& commitment : financialCommitments) {
-        if (to_string(commitment.getStudentID()) == studentID) {
-            foundEntry = true;
-            cout << "Total Tuition Fee: " << commitment.getTotalTuitionFee() << "\n";
-            cout << "Additional Fees: " << commitment.getAdditionalFees() << "\n";
-            cout << "Paid Amount: " << commitment.getPaidAmount() << "\n";
-            cout << "Payment Deadline: " << commitment.getPaymentDeadline() << "\n";
-            cout << "-----------------------------------------------------------\n";
-            
+        for (int i = 0; i < financialCommitments.size(); i++) {
+            if (to_string(financialCommitments[i].getStudentID()) == studentID) {
+                foundEntry = true;
+                index = i;
+                balance = (financialCommitments[i].getTotalTuitionFee() + financialCommitments[i].getAdditionalFees()) - financialCommitments[i].getPaidAmount();
+
+                cout << "Total Tuition Fee: " << financialCommitments[i].getTotalTuitionFee() << "\n";
+                cout << "Additional Fees: " << financialCommitments[i].getAdditionalFees() << "\n";
+                cout << "Paid Amount: " << financialCommitments[i].getPaidAmount() << "\n";
+                cout << "Payment Deadline: " << financialCommitments[i].getPaymentDeadline() << "\n";
+                cout << "-----------------------------------------------------------\n";
+            }
         }
-    }
-    
-    if(!foundEntry){
-    cout << "No payment history found for Student ID " << studentID << ".\n";
-     continueToNext();
+
+        // No Payment History Found
+        if(!foundEntry) { 
+            cout << "No payment history found for Student ID " << studentID << ".\n";
+            continueToNext();
             return;
         }
 
+        // Fully Paid Balance
+        if (balance == 0) {
+            cout << "\nYou've fully paid your remaining balance." << endl;
+            continueToNext();
+            return;
+        }
+
+        // Remaining Balance
+        cout << "\nYour remaining balance is P" << balance << endl;
+        cout << "\nDo you want to make a payment? " << endl;
+        cout << "[1] Yes" << endl;
+        cout << "[2] No" << endl;
+        cout << "Type your choice here: ";
+
+        switch(inputMenu(2)) {
+            case -1: // Error
+                return;
+
+            case 2: // Exit Balance Menu
+                cout << "\nNo payments made, returning to main menu." << endl;
+                continueToNext();
+                return;
+        }
+
+        // User wants to pay
+        cout << "\nAmount to be paid: ";
+        if (!inputIntNum(&paidAmt)) {
+            return;
+        }
+
+        // Errors
+        if (paidAmt > balance) {
+            cout << "\nError! Amount that'll be paid is higher than the balance, please try again!" << endl;
+            continueToNext();
+            return;
+        } else if (paidAmt == 0) {
+            cout << "\nPaid amount is zero. no changes to the database has been made." << endl;
+            continueToNext();
+            return;
+        } else if (paidAmt < 0) {
+            cout << "\nError! You paid a negative amount of money. Please try again!" << endl;
+            continueToNext();
+            return;
+        }
+
+        // Update Balance
+        if (paidAmt == balance) {
+            cout << "\nBalance has been fully paid in full. Thank you!" << endl;
+        } else if (paidAmt < balance) {
+            cout << "\nAmount has been paid, your remaining balance is: P" << balance - paidAmt << endl;
+        }
+
+        int newPaidAmount = financialCommitments[index].getPaidAmount() + paidAmt;
+
+        financialCommitments[index].setPaidAmount(newPaidAmount);
+
+        db->saveData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
+
+        cout << endl;
         continueToNext();
         return;
     }
     
 
     void displayStudentInformation(){
-         clearScreen();
-         Database* db = Database::getInstance();
-         auto& studentEntries = db->getStudentEntries();
-         bool foundEntry = false;
-    cout << "Student Information for Student ID " << studentID << ":\n";
-    
-    for (auto& student : studentEntries) {
-        if (to_string(student.getStudentID()) == studentID) {
-            foundEntry = true;
-            cout << "Name: " << student.getName() << "\n";
-            cout << "Section: " << student.getSection() << "\n";
-            cout << "Age: " << student.getAge() << "\n";
-            cout << "Contact Number: " << student.getContact() << "\n";
-            cout << "Address: " << student.getAddress() << "\n";
-            cout << "Email Address: " << student.getEmailAddress() << "\n";
-            cout << "--------------------------------------------------\n";
-            
+        clearScreen();
+        Database* db = Database::getInstance();
+        auto& studentEntries = db->getStudentEntries();
+        bool foundEntry = false;
+        cout << "Student Information for Student ID " << studentID << ":\n";
+        
+        for (auto& student : studentEntries) {
+            if (to_string(student.getStudentID()) == studentID) {
+                foundEntry = true;
+                cout << "Name: " << student.getName() << "\n";
+                cout << "Section: " << student.getSection() << "\n";
+                cout << "Age: " << student.getAge() << "\n";
+                cout << "Contact Number: " << student.getContact() << "\n";
+                cout << "Address: " << student.getAddress() << "\n";
+                cout << "Email Address: " << student.getEmailAddress() << "\n";
+                cout << "--------------------------------------------------\n";
+                
+            }
         }
-    }
-    if(!foundEntry){
-    cout << "No student information found for Student ID " << studentID << ".\n";
-        continueToNext();
-        return;
-        }
+        if(!foundEntry){
+        cout << "No student information found for Student ID " << studentID << ".\n";
+            continueToNext();
+            return;
+            }
 
-        continueToNext();
-        return;
+            continueToNext();
+            return;
     }
 
     void editStudentInformation() {
         clearScreen();
-           Database* db = Database::getInstance();
+        Database* db = Database::getInstance();
         auto& studentEntries = db->getStudentEntries();
         bool foundEntry = false;
         for (auto& student : studentEntries) {
@@ -293,9 +352,7 @@ class Student : public Account {
                     cout << "Address updated.\n";
                 }
                 
-
-                db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 5);
-                db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 6);
+                db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
 
                 cout << "Information successfully updated.\n";
                  continueToNext();
@@ -303,6 +360,3 @@ class Student : public Account {
         }
     }
     };
-
-
-

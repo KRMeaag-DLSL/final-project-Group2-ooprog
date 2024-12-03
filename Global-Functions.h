@@ -69,7 +69,7 @@ inline int inputStudentID() {
     try {
         cin >> strInput;
         if (!checkStrDigit(strInput)) {
-            throw string("\nInput is not an integer, please try again!");
+            throw string("\nInput is either a negative or not an integer, please try again!");
         } else if (strInput.length() != 10) {
             throw string("\nInput is not a student ID, please try again!");
         } else if (stoi(strInput) < 0) {
@@ -96,9 +96,7 @@ inline bool inputDoubleNum(double* num) {
     try {
         cin >> numStr;
         if (!checkStrDigit(numStr)) {
-            throw string("\nInput is not an integer, please try again!");
-        } else if (stoi(numStr) < 0) {
-            throw string("\nInput is a negative number, please try again!");
+            throw string("\nInput is either a negative or not an integer, please try again!");
         } else {
             *num = stoi(numStr);
             return true;
@@ -122,9 +120,7 @@ inline bool inputIntNum(int* num) {
     try {
         cin >> numStr;
         if (!checkStrDigit(numStr)) {
-            throw string("\nInput is not an integer, please try again!");
-        } else if (stoi(numStr) < 0) {
-            throw string("\nInput is a negative number, please try again!");
+            throw string("\nInput is either a negative or not an integer, please try again!");
         } else {
             *num = stoi(numStr);
             return true;

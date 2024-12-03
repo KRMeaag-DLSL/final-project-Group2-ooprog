@@ -127,6 +127,7 @@ class FinancialCommitment {
         int getAdditionalFees() { return additionalFees;}
         int getPaidAmount() { return paidAmount;}
         string getPaymentDeadline() { return paymentDeadline;}
+        void setPaidAmount(int input) {paidAmount = input;}
 };
 
 class Attendance {
@@ -274,7 +275,6 @@ class Database {
 
             switch(type) {
                 case 1: {
-                    cout << "Hello" << endl;
                     fout << "Student-ID,Section,Name,Age,Contact,Address,Email Address,Department\n";
                     for (auto& student : studentEntries) {
                         fout << student.getStudentID() << "," << student.getSection() << "," << student.getName() << "," << student.getAge() << "," << student.getContact()
