@@ -20,7 +20,7 @@ class StudentEntry {
     public:
         StudentEntry(int id, string section, string name, int age, string contact, string address, string emailAddress, string department) :
         studentID(id), section(section), name(name), age(age), contact(contact), address(address), emailAddress(emailAddress), department(department) {}
-
+        StudentEntry() {}
         int getStudentID() { return studentID;}
         void setStudentID(int id) {studentID = id;}
         string getSection() { return section;}
@@ -90,6 +90,7 @@ class Grade {
     public:
         Grade(int id, double e, double m, double s, double sS, double f, double t, double c, double mapeh) 
         : studentID(id), english(e), math(m), science(s), socStud(sS), filipino(f), tle(t), clce(c), mapeh(mapeh) {}
+        Grade() {}
         int getStudentID() { return studentID;}
         double getEnglish() { return english;}
         double getMath(){ return math;}
@@ -120,6 +121,7 @@ class FinancialCommitment {
     public:
         FinancialCommitment(int id, int ttf, int af, int pa, string pd) 
         : studentID(id), totalTuitionFee(ttf), additionalFees(af), paidAmount(pa), paymentDeadline(pd) {}
+        FinancialCommitment() {}
         int getStudentID() { return studentID;}
         int getTotalTuitionFee() { return totalTuitionFee;}
         int getAdditionalFees() { return additionalFees;}

@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctype.h>
 #include <iostream>
+#include <regex>
 
 using namespace std;
 
@@ -182,6 +183,11 @@ inline int checkDate(string input) {
     }
 
     return 0;
+}
+
+inline bool isValidContact(const string& contact) {
+    regex pattern(R"(\d{3}-\d{3}-\d{4})"); // Matches XXX-XXX-XXXX
+    return regex_match(contact, pattern);
 }
 
 // Asks for date input, returns date if no errors and returns "INVALID_ERROR!" if an error occurs

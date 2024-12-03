@@ -8,6 +8,7 @@
 #include "Global-Functions.h"
 #include "Users.h"
 #include "Admin.h"
+#include "Students.h"
 
 using namespace std;
 
@@ -81,7 +82,8 @@ void facultyHandler(string accountID) {
 }
 
 void studentHandler(string accountID) {
-    cout << "Student much wow" << endl;
+    Student student(accountID);
+    student.menu();
 
     // Add student functionality here
 }
