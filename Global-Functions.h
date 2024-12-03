@@ -186,6 +186,24 @@ inline bool isValidContact(const string& contact) {
     return regex_match(contact, pattern);
 }
 
+inline string processAddress(const string& address) {
+    string processedAddress = address;
+
+    // Enclose the address in double quotes if it contains commas
+    if (processedAddress.find(',') != string::npos) {
+        processedAddress = "\"" + processedAddress + "\"";
+    }
+
+    // Escape any double quotes in the address
+    for (size_t i = 0; i < processedAddress.length(); ++i) {
+        if (processedAddress[i] == '\"') {
+            processedAddress.insert(i, "\"");
+            ++i; // Skip over the added quote
+        }
+    }
+
+    return processedAddress;
+}
 // Asks for date input, returns date if no errors and returns "INVALID_ERROR!" if an error occurs
 inline string inputDate(bool isAdding) {
     string input;

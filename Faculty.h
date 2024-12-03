@@ -651,7 +651,7 @@ class Faculty : public Account {
             
             for (auto& student : students) {
                 if (assignedSection == student.getSection()) {
-                    cout << left << setw(WIDTH) << student.getSection()
+                    cout << left << setw(WIDTH) << student.getStudentID()
                     << setw(WIDTH) << student.getSection() 
                     << setw(WIDTH) << student.getName() 
                     << setw(WIDTH) << student.getDepartment() << endl;
