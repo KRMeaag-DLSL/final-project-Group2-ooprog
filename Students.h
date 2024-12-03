@@ -31,17 +31,13 @@ class Student : public Account {
         return studentID;
     }
 
-    string getSection(){
-        return section;
-    }
+    
 
     void setStudentID(){
         this->studentID = studentID;
     }
 
-    void setSection(){
-        this->section = section;
-    }
+    
 
     void menu() override {
     int choice;
@@ -61,9 +57,13 @@ class Student : public Account {
                 cout << "[7] Log-out" << endl;
 
                 cout << "Type your choice: ";
-                switch (inputMenu(7)) {
-                    case -1:
-                        continue;
+
+                choice = inputMenu(7);
+
+                if (choice == -1) {
+                    continue;
+                }
+                switch (choice) {
                     case 1:
                         displayStudentGrades();
                         break;
@@ -115,12 +115,12 @@ class Student : public Account {
     void displayStudentDeadlines(){
         clearScreen();
         Database* db = Database::getInstance();
-        auto& deadline = db->getDeadlines();
+        auto& deadlines = db->getDeadlines();
         bool foundEntry = false;
 
         cout << "Deadlines under your section " << section << ":\n";
        
-        for (auto& deadline : db->getDeadlines()) {
+        for (auto& deadline : deadlines) {
             if (deadline.getSection() == section) {
                 foundEntry = true;
                 cout << "Section: " << deadline.getSection() << "\n";

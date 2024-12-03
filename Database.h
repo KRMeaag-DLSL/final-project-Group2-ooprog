@@ -262,6 +262,7 @@ class Database {
             fin.close();
         }
 
+
         void saveData(string fileName, int type) {
             // File pointer
             fstream fin, fout;
