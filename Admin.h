@@ -785,7 +785,7 @@ class Admin : Account{
             cout << "Enter Student Department: ";
             getline(cin, department);
 
-            StudentEntry entry = Database::getInstance()->getStudentEntries()[updateIndex];
+            StudentEntry& entry = Database::getInstance()->getStudentEntries()[updateIndex];
             entry.setStudentID(id);
             entry.setSection(section);
             entry.setAge(age);
