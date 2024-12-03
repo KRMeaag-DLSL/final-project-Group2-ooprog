@@ -456,7 +456,7 @@ class Faculty : public Account {
             int days;
             
             clearScreen();
-            cout << "Which student do you want to change the attendance re?" << endl;
+            cout << "Which student do you want to change the attendance?" << endl;
             cout << "Type the student's ID number: ";
             searchID = inputStudentID();
 
@@ -484,7 +484,7 @@ class Faculty : public Account {
                 return;
             }
             
-            cout << "\nEntry found! Attendance records of student:" << attendance[keyDatabase].getStudentID() << endl;
+            cout << "\nEntry found! Attendance records of student: " << attendance[keyDatabase].getStudentID() << endl;
             cout << "Absents: " << attendance[keyDatabase].getAbsents() << endl;
             cout << "Lates: " << attendance[keyDatabase].getLates() << endl;
 

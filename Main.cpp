@@ -14,7 +14,7 @@ using namespace std;
 
 Database* Database::instance = nullptr;
 
-void adminHandler();
+void adminHandler(string accountID);
 
 void facultyHandler(string accountID);
 
@@ -51,7 +51,7 @@ int main() {
         } else {
             switch (accountType) {
                 case 0:
-                    adminHandler();
+                    adminHandler(accountID);
                     break;
                 case 1:    
                     facultyHandler(accountID);
@@ -66,8 +66,8 @@ int main() {
     return 0;
 }
 
-void adminHandler() {
-    Admin admin;
+void adminHandler(string accountID) {
+    Admin admin(accountID);
     admin.menu();
 }
 

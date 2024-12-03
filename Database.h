@@ -127,6 +127,7 @@ class FinancialCommitment {
         int getAdditionalFees() { return additionalFees;}
         int getPaidAmount() { return paidAmount;}
         string getPaymentDeadline() { return paymentDeadline;}
+        void setPaidAmount(int input) {paidAmount = input;}
 };
 
 class Attendance {
