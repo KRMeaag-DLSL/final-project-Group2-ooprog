@@ -101,7 +101,9 @@ class SortContext {
     
     public:
         SortContext(SortStrategy* strat) : strategy(strat) {}
-        
+
+        SortContext() {}
+
         void setSortStrategy(SortStrategy* strat) {strategy = strat;}
 
         void sortData(vector<int>& data) {
