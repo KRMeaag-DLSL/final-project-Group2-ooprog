@@ -9,6 +9,7 @@
 #include "Users.h"
 #include "Global-Functions.h"
 #include "Database.h"
+#include "SortStrategy.h"
 
 using namespace std;
 
@@ -843,19 +844,171 @@ class Admin : Account{
             continueToNext();
         }
         
+        Attendance getAttendanceFromID(int id, Database* db) {
+            for (Attendance attendance : db->getAttendance()) {
+                if (attendance.getStudentID() == id) return attendance;
+            }
+            return Attendance();
+        }
+        
+        Grade getGradeFromID(int id, Database* db) {
+            for (Grade grade : db->getGrades()) {
+                if (grade.getStudentID() == id) return grade;
+            }
+            return Grade();
+        }
+
+        StudentEntry getInfoFromID(int id, Database* db) {
+            for (StudentEntry entry : db->getStudentEntries()) {
+                if (entry.getStudentID() == id) return entry;
+            }
+            return StudentEntry();
+        }
+        FinancialCommitment getFinancialCommitmentFromID(int id, Database* db) {
+            for (FinancialCommitment commitment : db->getFinancialCommitments()) {
+                if (commitment.getStudentID() == id) return commitment;
+            }
+            return FinancialCommitment();
+        }
+
+        void displayIDs(vector<int> data, Database* db) {
+            const int WIDTH = 15;
+            cout << left << setw(WIDTH) << "ID" 
+                << left << setw(WIDTH) << "Section" 
+                << left << setw(WIDTH) << "Name" 
+                << left << setw(WIDTH) << "Age"
+                << left << setw(WIDTH) << "Contact" 
+                << left << setw(WIDTH) << "Address" 
+                << left << setw(WIDTH) << "Email Address" 
+                << left << setw(WIDTH) << "Department" << endl;
+            for (int i : data) {
+                StudentEntry entry = getInfoFromID(i, db);
+                cout << left << setw(WIDTH) << entry.getStudentID()
+                << left << setw(WIDTH) << entry.getSection()
+                << left << setw(WIDTH) << entry.getName()
+                << left << setw(WIDTH) << entry.getAge()
+                << left << setw(WIDTH) << entry.getContact()
+                << left << setw(WIDTH) << entry.getAddress()
+                << left << setw(WIDTH) << entry.getEmailAddress()
+                << left << setw(WIDTH) << entry.getDepartment() << endl;
+            }
+        }
+        void displayBalances(vector<int> data, Database* db) {
+            const int WIDTH = 20;
+            cout << left << setw(WIDTH) << "Student-ID"
+                << left << setw(WIDTH) << "Total-Tuition-Fee"
+                << left << setw(WIDTH) << "Additional-Fees"
+                << left << setw(WIDTH) << "Paid-Amount"
+                << left << setw(WIDTH) << "Payment-Deadline" 
+                << left << setw(WIDTH) << "Balance" << endl;
+
+            for (int i : data) {
+                FinancialCommitment entry = getFinancialCommitmentFromID(i, db);
+                cout << left << setw(WIDTH) << entry.getStudentID()
+                    << left << setw(WIDTH) << entry.getTotalTuitionFee()
+                    << left << setw(WIDTH) << entry.getAdditionalFees()
+                    << left << setw(WIDTH) << entry.getPaidAmount()
+                    << left << setw(WIDTH) << entry.getPaymentDeadline() 
+                    << left << setw(WIDTH) << entry.getTotalTuitionFee() + entry.getAdditionalFees() - entry.getPaidAmount() << endl;
+            }
+        }
+        void displayGrades(vector<int> data, Database* db) {
+            cout << left << setw(10) << "ENGLISH" 
+                << left << setw(10) << "MATH" 
+                << left << setw(10) << "SCIENCE" 
+                << left << setw(10) << "SOC STUD"
+                << left << setw(10) << "FILIPINO" 
+                << left << setw(10) << "TLE" 
+                << left << setw(10) << "CLCE" 
+                << left << setw(10) << "MAPEH" << endl;
+            for (int i : data) {
+                Grade grade = getGradeFromID(i, db);
+                cout << left << setw(10) << grade.getEnglish()
+                    << left << setw(10) << grade.getMath()
+                    << left << setw(10) << grade.getScience()
+                    << left << setw(10) << grade.getSocStud()
+                    << left << setw(10) << grade.getFilipino()
+                    << left << setw(10) << grade.getTLE()
+                    << left << setw(10) << grade.getCLCE()
+                    << left << setw(10) << grade.getMAPEH()
+                    << left << setw(10) << (grade.getEnglish() + 
+                                    grade.getMath() + 
+                                    grade.getScience() + 
+                                    grade.getSocStud() + 
+                                    grade.getFilipino() + 
+                                    grade.getTLE() + 
+                                    grade.getCLCE() + 
+                                    grade.getMAPEH())/8 << endl;
+            }
+        }
+        void displayAttendance(vector<int> data, Database* db) {
+            cout << left << setw(20) << "STUDENT ID" <<
+                left << setw(20) << "ABSENTS" <<
+                left << setw(20) << "LATES" << endl;;
+            for (int i : data) {
+                Attendance attendance = getAttendanceFromID(i, db);
+                cout << left << setw(20) << attendance.getStudentID() <<
+                left << setw(20) << attendance.getAbsents() <<
+                left << setw(20) << attendance.getLates() << endl;
+            }
+        }
+
         void displayStudents() {
-            vector<StudentEntry>& students = Database::getInstance()->getStudentEntries();
+            Database* db = Database::getInstance();
             const int WIDTH = 25;
+            bool loopMenu = true;
+            SortContext context;
+            string sort;
+            vector<int> studentIDs;
 
-            cout << "Displaying student entries under your assigned section" << endl;
+            while(loopMenu) {
+                clearScreen();
+                cout << "Choose Sorting Method When Displaying Students:" << endl;
+                cout << "[1] ID\n";
+                cout << "[2] Balance\n";
+                cout << "[3] Grades\n";
+                cout << "[4] Attendance\n";
+                cout << "[5] Go Back\n";
 
-            cout << "Student ID" << setw(WIDTH) << "Section" << setw(WIDTH) << "Name" << setw(WIDTH) << "Department" << endl;
-            
-            for (auto& student : students) {
-                cout << student.getStudentID() << setw(WIDTH) 
-                << student.getSection() << setw(WIDTH) 
-                << student.getName() << setw(WIDTH) 
-                << student.getDepartment() << endl;
+                switch(inputMenu(5)) {
+                    case -1: 
+                        continue;
+                    case 1:
+                        context = SortContext(new IDSort());
+                        sort = "ID";
+                        break;
+                    case 2:
+                        context = SortContext(new BalanceSort());
+                        sort = "Balance";
+                        break;
+                    case 3:
+                        context = SortContext(new GradesSort());
+                        sort = "Grades";
+                        break;
+                    case 4:
+                        context = SortContext(new AttendanceSort());
+                        sort = "Attendance";
+                        break;
+                    case 5:
+                        return;
+                }
+                break;
+            }
+
+            for (StudentEntry& entry : db->getStudentEntries()) {
+                studentIDs.push_back(entry.getStudentID());
+            }
+
+            context.sortData(studentIDs);
+
+            if (sort == "ID") {
+                displayIDs(studentIDs, db);
+            }else if (sort == "Balance") {
+                displayBalances(studentIDs, db);
+            }else if (sort == "Grades") {
+                displayGrades(studentIDs, db);
+            }else if (sort == "Attendance") {
+                displayAttendance(studentIDs, db);
             }
 
             cout << endl;
