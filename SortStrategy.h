@@ -12,7 +12,22 @@ class SortStrategy {
 
 class BalanceSort : public SortStrategy {
     public:
-        void sortData(vector<int>& data) override {}
+        void sortData(vector<int>& data) override {
+            sort(data.begin(), data.end(), [](int a, int b) {
+                FinancialCommitment balanceA, balanceB;
+
+                for (FinancialCommitment commitment : Database::getInstance()->getFinancialCommitments()) {
+                    if (commitment.getStudentID() == a) balanceA = commitment;
+                    if (commitment.getStudentID() == b) balanceB = commitment;
+                }
+
+                float balanceValueA = balanceA.getTotalTuitionFee() + balanceA.getAdditionalFees() - balanceA.getPaidAmount();
+                float balanceValueB = balanceB.getTotalTuitionFee() + balanceB.getAdditionalFees() - balanceB.getPaidAmount();
+
+                // Sort by balance in ascending order
+                return balanceValueA < balanceValueB;
+            });
+        }
 };
 
 class IDSort : public SortStrategy {

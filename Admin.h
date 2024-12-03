@@ -20,30 +20,123 @@ class Admin : Account{
         void createStudentEntry() {
             clearScreen();
             string section, name, contact, address, emailAddress, department, tuitionDeadline;
-            int id, age, tuition;
-            cout << "Enter Student ID: ";
-            cin >> id;
-            cin.ignore();
+            int id = 0, age = 0, tuition = 0;
+
+            while (true) {
+                clearScreen();
+                cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
+                cout << "Enter Student ID: ";
+                id = inputStudentID();
+                cin.ignore();
+                if (id != -1) break;
+            }
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Section: ";
             getline(cin, section);
-            cout << "Enter Student Age: ";
-            cin >> age;
-            cin.ignore();
+
+            while (true) {
+                clearScreen();
+                cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                    << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                    << address << "], [" << emailAddress << "], [" 
+                    << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                    << tuitionDeadline << "]\n";
+                cout << "Enter Student Age: ";
+                bool check = inputIntNum(&age);
+                cin.ignore();
+                if (check) break;
+            }
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Contact Info: ";
             getline(cin, contact);
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Name: ";
             getline(cin, name);
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Address: ";
             getline(cin, address);
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Email: ";
             getline(cin, emailAddress);
+
+            clearScreen();
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n";
             cout << "Enter Student Department: ";
             getline(cin, department);
-            cout << "Enter Tuition Amount: ";
-            cin >> tuition;
-            cin.ignore();
-            cout << "Enter Deadline Of Tuition: ";
-            getline(cin, tuitionDeadline);
+
+            while (true) {
+                clearScreen();  
+                cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                    << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                    << address << "], [" << emailAddress << "], [" 
+                    << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                    << tuitionDeadline << "]\n";
+                cout << "Enter Tuition Amount: ";
+                bool check = inputIntNum(&tuition);
+                cin.ignore();
+                if (check) break;
+            }
+
+            while(true) {
+                clearScreen();
+                cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                    << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                    << address << "], [" << emailAddress << "], [" 
+                    << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                    << tuitionDeadline << "]\n";
+                cout << "Enter Deadline Of Tuition (MM-DD-YYYY): ";
+                string check = inputDate(false);
+                if (check != "INVALID_ERROR!") {
+                    tuitionDeadline = check;
+                    break;
+                }
+            }
+
+            clearScreen();
+            cout << "Student Entry Successfully Added!\n";
+            cout << "[" << ((id == 0 || id == -1) ? " " : to_string(id)) << "], [" << section << "], [" 
+                << ((age == 0 || age == -1) ? " " : to_string(age)) << "], [" << contact << "], [" << name << "], [" 
+                << address << "], [" << emailAddress << "], [" 
+                << department << "], [" << ((tuition == 0 || tuition == -1) ? " " : to_string(tuition)) << "], [" 
+                << tuitionDeadline << "]\n\n";
 
             Database* db = Database::getInstance();
             db->getStudentEntries().push_back(StudentEntry(id,section,name,age,contact,address,emailAddress,department));
@@ -59,22 +152,66 @@ class Admin : Account{
         }
         
         void createDisciplinaryRecord() {
-            clearScreen();
-            int studentID, severity;
+            int studentID = 0, severity = 0;
             string offence, date;
-            cout << "Enter Student ID: ";
-            cin >> studentID;
-            cin.ignore();
+
+            while (true) {
+                clearScreen();
+                cout << "[" << ((studentID == 0 || studentID == -1) ? " " : to_string(studentID)) << "], [" <<
+                    offence << "], [" << ((severity == 0 || severity == -1) ? " " : to_string(severity)) << "], [" <<
+                    date << "]\n";
+                cout << "Enter Student ID: ";
+                studentID = inputStudentID();
+                cin.ignore();
+                if (studentID != -1) break;
+            }
+
+            clearScreen();
+            cout << "[" << ((studentID == 0 || studentID == -1) ? " " : to_string(studentID)) << "], [" <<
+                offence << "], [" << ((severity == 0 || severity == -1) ? " " : to_string(severity)) << "], [" <<
+                date << "]\n";
             cout << "Enter Offence: ";
             getline(cin, offence);
-            cout << "Enter Severity: ";
-            cin >> severity;
-            cin.ignore();
-            cout << "Enter Date: ";
-            getline(cin, date); 
+
+            while (true) {
+                clearScreen();
+                cout << "[" << ((studentID == 0 || studentID == -1) ? " " : to_string(studentID)) << "], [" <<
+                    offence << "], [" << ((severity == 0 || severity == -1) ? " " : to_string(severity)) << "], [" <<
+                    date << "]\n";
+                cout << "Enter Severity (1-3): ";
+                bool check = inputIntNum(&severity);
+                if (severity > 3 || severity < 1) {
+                    cout << "\nSeverity must be between 1 and 3.\n";
+                    severity = 0;
+                    continueToNext();
+                    continue;
+                }
+                else if (check) break;
+            }
+            
+            while (true) {
+                clearScreen();
+                cout << "[" << ((studentID == 0 || studentID == -1) ? " " : to_string(studentID)) << "], [" <<
+                    offence << "], [" << ((severity == 0 || severity == -1) ? " " : to_string(severity)) << "], [" <<
+                    date << "]\n";
+                cout << "Enter Date: ";
+                string check = inputDate(false);
+                if (check != "INVALID_ERROR!") {
+                    date = check;
+                    break;
+                }
+            }
+
+            clearScreen();
+            cout << "Disciplinary Record Successfully Added!\n";
+            cout << "[" << ((studentID == 0 || studentID == -1) ? " " : to_string(studentID)) << "], [" <<
+                offence << "], [" << ((severity == 0 || severity == -1) ? " " : to_string(severity)) << "], [" <<
+                date << "]\n\n";
 
             Database::getInstance()->getRecords().push_back(Record(studentID, offence, severity, date));
             Database::getInstance()->saveData("MA2_Records-DB - Sheet1.csv", 2);
+
+            continueToNext();
         }
 
         void searchStudent() {
@@ -118,13 +255,19 @@ class Admin : Account{
         
         void updateDisciplinaryRecords() {
             clearScreen();
+            Database* db = Database::getInstance();
             int updateIndex = -1;
-            cout << "Which disciplinary record do you want to update?" << endl;
-            cout << "Type the student's ID number: ";
             int searchID;
-            cin >> searchID;
-            for (int i = 0; i < Database::getInstance()->getRecords().size(); i++) {
-                Record record = Database::getInstance()->getRecords()[i];
+            while (true) {
+                clearScreen();
+                cout << "Which disciplinary record do you want to update?" << endl;
+                cout << "Type the student's ID number: ";
+                searchID = inputStudentID();
+                if (searchID != -1) break;
+            }
+
+            for (int i = 0; i < db->getRecords().size(); i++) {
+                Record record = db->getRecords()[i];
                 if (searchID == record.getStudentID()) {
                     updateIndex = i;
                 }
@@ -134,26 +277,69 @@ class Admin : Account{
                 continueToNext();
                 return;
             }
-
-            int studentID, severity;
-            string offence, date;
-            cout << "Enter Student ID: ";
-            cin >> studentID;
-            cin.ignore();
-            cout << "Enter Offence: ";
-            getline(cin, offence);
-            cout << "Enter Severity: ";
-            cin >> severity;
-            cin.ignore();
-            cout << "Enter Date: ";
-            getline(cin, date);
-
-            Record* record = &Database::getInstance()->getRecords()[updateIndex];
-            record->setStudentID(studentID);
-            record->setOffence(offence);
-            record->setSeverity(severity);
-            record->setDate(date);
-            Database::getInstance()->saveData("MA2_Records-DB - Sheet1.csv", 2);
+            bool loopMenu = true;
+            while (loopMenu) {
+                clearScreen();
+                cout << "Select from the following to edit:" << endl;
+                cout << "[1] Offence" << endl;
+                cout << "[2] Severity" << endl;
+                cout << "[3] Date" << endl;
+                cout << "[4] Cancel Editing Disciplinary Record" << endl;
+                
+                switch(inputMenu(4)) {
+                    case 1: {
+                        clearScreen();
+                        string offence;
+                        cin.ignore();
+                        cout << "Enter The New Offence: ";
+                        getline(cin, offence);
+                        db->getRecords()[updateIndex].setOffence(offence);
+                        loopMenu = false;
+                        break;
+                    }
+                    case 2: {
+                        while (true) {
+                            clearScreen();
+                            int severity;
+                            cin.ignore();
+                            cout << "Enter The New Severity (1-3): ";
+                            bool check = inputIntNum(&severity);
+                            db->getRecords()[updateIndex].setSeverity(severity);
+                            if (severity > 3 || severity < 1) {
+                                cout << "\nSeverity must be between 1 and 3.\n";
+                                severity = 0;
+                                continueToNext();
+                                continue;
+                            }
+                            else if (check) break;
+                        }
+                        loopMenu = false;
+                        break;
+                    }
+                    case 3: {
+                        while (true) {
+                            clearScreen();
+                            string date;
+                            cin.ignore();
+                            cout << "Enter The New Date (MM-DD-YYYY): ";
+                            string check = inputDate(false);
+                            if (check != "INVALID_ERROR!") {
+                                date = check;
+                                db->getRecords()[updateIndex].setDate(date);
+                                break;
+                            }
+                        }
+                        loopMenu = false;
+                        break;
+                    }
+                    case -1: case 4:
+                        loopMenu = false;
+                        break;
+                }
+            }
+            
+            db->saveData("MA2_Records-DB - Sheet1.csv", 2);
+            clearScreen();
             cout << "Disciplinary Record Updated Successfully!" << endl;
             continueToNext();
         }
@@ -389,22 +575,32 @@ class Admin : Account{
             }
         }
         
-        void assignFaculty() {
-            clearScreen();
+        bool updateSection(TeacherInfo* info) {
+            string sections[] = {
+                "BM105",
+                "BM202",
+                "CMR204",
+                "CMR207"
+            };
+            while(true) {
+                clearScreen();
+                cout << "Choose A Section:\n";
+                for (int i = 0; i < 4; ++i) {
+                    cout << "[" << (i + 1) << "] " << sections[i] << "\n";
+                }
+                cout << "[5] Go Back\n";
 
-            ifstream fin;
+                int choice = inputMenu(5);
 
-            fin.open("MA2_Teacher-Subject-DB - Sheet1.csv", ios::in);
+                if (choice == 5) return false;
+                else if (choice == -1) continue;
 
-            if (!fin.is_open()) {
-                cerr << "Error! Unable to open assigned teachers database file" << endl;
-                return; // Error - File I/O is not working
+                info->setSection(sections[choice-1]);
+                return true;
             }
-
-            bool isEditSubject;
-            string faculty;
-            string edit;
-            string line;
+        }
+        
+        bool updateSubject(TeacherInfo* info) {
             string subjects[] = {
                 "English",
                 "Science",
@@ -415,47 +611,84 @@ class Admin : Account{
                 "TLE",
                 "MAPEH"
             };
+            int choice;
 
-            cout << "Do you want to change the assigned subject or the assigned section?" << endl;
-            cout << "[1] Subject" << endl;
-            cout << "[2] Section" << endl;
-            cout << "[3] Cancel editing" << endl;
-            cout << "Type your choice here: ";
+            while (true) {
+                clearScreen();
+                cout << "Choose A Subject:\n";
+                for (int i = 0; i < 8; ++i) {
+                    cout << "[" << (i + 1) << "] " << subjects[i] << "\n";
+                }
+                cout << "[9] Go Back\n";
 
-            switch(inputMenu(3)) {
-                case -1: case 3:
-                    return;
-                case 1:
-                    isEditSubject = true;
-                    break;
-                case 2:
-                    isEditSubject = false;
-                    break;
+                choice = inputMenu(9);
+
+                if (choice == 9) return false;
+                else if (choice == -1) continue;
+
+                info->setSubject(subjects[choice-1]);
+                return true;
             }
+        }
 
-            cout << "What is the faculty ID of the faculty you want to assign?" << endl;
-            cin >> faculty;
+        void assignFaculty() {
+            string facultyID;
+            TeacherInfo* teacherInfo;
+            bool checkID = false;
+            Database* db = Database::getInstance();
 
-            getline(fin, line);
+            while (true) {
+                clearScreen();
+                cout << "What is the faculty ID of the faculty you want to assign?" << endl;
+                getline(cin, facultyID);
 
-            while (getline(fin, line)) {
-                string getFacultyID, getSection, getSubject;
-                stringstream s(line);
-
-                getline(s, getFacultyID, ',');
-                getline(s, getSection, ',');
-                getline(s, getSubject, ',');
-
-
-                if (getFacultyID == faculty) {
-                    cout << "What is the new " << (isEditSubject ? "subject " : "section" ) << "of " << faculty << ": ";
-                    cin >> faculty;
-
-                    if (!isEditSubject) {
-                        // NOT DONE
+                for (TeacherInfo& info : db->getTeacherInfo()) {
+                    if (info.getFacultyID() == facultyID) {
+                        teacherInfo = &info;
+                        checkID = true;
                     }
-                }   
-            }            
+                }
+
+                if (!checkID) {
+                    cout << "\nFaculty ID not found." << endl;
+                    continueToNext();
+                    return;
+                }
+
+                while(true) {
+                    clearScreen();
+                    cout << "Do you want to change the assigned subject or the assigned section?" << endl;
+                    cout << "[1] Subject" << endl;
+                    cout << "[2] Section" << endl;
+                    cout << "[3] Cancel editing" << endl;
+                    cout << "Type your choice here: ";
+
+                    switch(inputMenu(3)) {
+                        case -1:
+                            continue;
+                        case 1:
+                            if (!updateSubject(teacherInfo)) continue;
+                            break;
+                        case 2:
+                            if (!updateSection(teacherInfo)) continue;
+                            break;
+                        case 3:
+                            return;
+                    }
+
+                    db->saveData("MA2_Teacher-Subject-DB - Sheet1.csv", 7);
+                    cout << "Update Successful!" << endl;
+                    cout << left << setw(15) << "Faculty-ID" <<
+                            left << setw(15) << "Section" <<
+                            left << setw(15) << "Subject" << endl;
+                    cout << left << setw(15) << facultyID <<
+                            left << setw(15) << teacherInfo->getSection() << 
+                            left << setw(15) << teacherInfo->getSubject() << endl << endl;
+                    continueToNext();
+                }
+
+            }
+                      
         }
         
         void updateStudentInfo() {
@@ -631,6 +864,7 @@ class Admin : Account{
                 if (choice == -1) {
                     continue;
                 }
+                cin.ignore();
 
                 switch (choice) {
                     case 1:
