@@ -92,7 +92,7 @@ class Student : public Account {
                         editStudentInformation();
                         break;
                     case 7:
-                        if(logout());
+                        if(logout())
                             return;
                         break;
                 }
