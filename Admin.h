@@ -794,7 +794,7 @@ class Admin : Account{
             entry.setAddress(address);
             entry.setEmailAddress(emailAddress);
             entry.setDepartment(department);
-            Database::getInstance()->saveData("MA2_Records-DB - Sheet1.csv", 2);
+            Database::getInstance()->saveData("MA2_Student-Entry-DB - Sheet1", 2);
             cout << "Student Entry Updated Successfully!" << endl;
             continueToNext();
         }

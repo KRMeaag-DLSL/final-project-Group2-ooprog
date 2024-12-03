@@ -198,14 +198,6 @@ class Database {
             loadData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
             loadData("MA2_Attendance-DB - Sheet1.csv", 6);
             loadData("MA2_Teacher-Subject-DB - Sheet1.csv", 7);
-
-            // delete this shit
-            cout << "Total student entries loaded: " << studentEntries.size() << endl;
-            cout << "Total records loaded: " << records.size() << endl;
-            cout << "Total deadlines loaded: " << deadlines.size() << endl;
-            cout << "Total grades loaded: " << grades.size() << endl;
-            cout << "Total commitments loaded: " << financialCommitments.size() << endl;
-            cout << "Total attendance loaded: " << attendance.size() << endl;
         }
     
     public:
