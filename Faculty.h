@@ -157,17 +157,17 @@ class Faculty : public Account {
 
             // Input Search Key
             cout << "\nWhich date will you update? (Input the date and priority)" << endl;
-            cout << "Type here (MM/DD/YYYY): ";
-
-            date = inputDate(false);
-            if (date == "INVALID_ERROR!") {
-                return;
-            }
-            
             cout << "Type the priority of the entry you want to update: ";
             priority = inputMenu(3);
 
             if (priority == -1) {
+                return;
+            }
+
+            cout << "Type the date here (MM/DD/YYYY): ";
+
+            date = inputDate(false);
+            if (date == "INVALID_ERROR!") {
                 return;
             }
 
@@ -213,7 +213,7 @@ class Faculty : public Account {
                 }                
             }
 
-            cout << "\nPriority or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
+            cout << "\nPriority and/or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
             continueToNext();
         }
 
@@ -238,11 +238,6 @@ class Faculty : public Account {
             }
 
             cout << "\nWhich date will you delete? (Input the date and priority)" << endl;
-            cout << "Type the date of the entry you want to delete (MM/DD/YYYY): ";
-            date = inputDate(false);
-            if (date == "INVALID_ERROR!") {
-                return;
-            }
             cout << "Type the priority of the entry you want to delete: ";
             priority = inputMenu(3);
 
@@ -250,11 +245,15 @@ class Faculty : public Account {
                 return;
             }
 
+            cout << "Type the date of the entry you want to delete (MM/DD/YYYY): ";
+            date = inputDate(false);
+            if (date == "INVALID_ERROR!") {
+                return;
+            }
+            
             for (int i = 0; i < deadlines.size(); i++) {
-                if (deadlines[i].getSection() == assignedSection 
-                && deadlines[i].getSubject() == currentSubject
-                && deadlines[i].getDeadlineDate() == date
-                && deadlines[i].getPriority() == priority) {
+                if (deadlines[i].getSection() == assignedSection && deadlines[i].getSubject() == currentSubject
+                && deadlines[i].getDeadlineDate() == date && deadlines[i].getPriority() == priority) {
                     deadlines.erase(deadlines.begin() + i);
                     db->saveData("MA2_Deadlines-DB - Sheet1.csv", 3);
                     cout << "\nEntry deleted successfully!" << endl;
@@ -263,7 +262,7 @@ class Faculty : public Account {
                 }                
             }
 
-            cout << "\nPriority or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
+            cout << "\nPriority and/or date did not match any assigned deadlines related to your section and subject. Try again!" << endl;
             continueToNext();
         }
 
@@ -651,7 +650,7 @@ class Faculty : public Account {
             
             for (auto& student : students) {
                 if (assignedSection == student.getSection()) {
-                    cout << left << setw(WIDTH) << student.getSection()
+                    cout << left << setw(WIDTH) << student.getStudentID()
                     << setw(WIDTH) << student.getSection() 
                     << setw(WIDTH) << student.getName() 
                     << setw(WIDTH) << student.getDepartment() << endl;
