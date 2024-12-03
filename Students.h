@@ -17,14 +17,21 @@ class Student : public Account {
 
     public:
         Student(string studentIDInput) : studentID((studentIDInput)), section("Default") {
+            cout << "TEST 1" << endl;
             Database* db = Database::getInstance();
+
+            cout << "TEST 12" << endl;
             vector<StudentEntry>& entries = db->getStudentEntries();
+
+            cout << "TEST 3" << endl;
 
             for (auto& entry : entries) {
                 if (entry.getStudentID() == stoi(studentIDInput)) {
                     section = entry.getSection();
                 }
             }
+
+            cout << "TEST 4" << endl;
         }
     
     string getStudentID(){
@@ -50,6 +57,8 @@ class Student : public Account {
             // Main Menu
             while (loopMenu) {
                 clearScreen();
+                cout << "TEST 3" << endl;
+
                 cout << "Good day, " << studentID << ", from section " << section << "! Please pick from the following:" << endl;
 
                 cout << "[1] Display Student Grades" << endl;

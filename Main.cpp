@@ -14,14 +14,13 @@ using namespace std;
 
 Database* Database::instance = nullptr;
 
-void adminHandler(string accountID);
+void adminHandler();
 
 void facultyHandler(string accountID);
 
 void studentHandler(string accountID);
 
 int main() {
-    // Database::getInstance()->getGrades(); kept this here so i dont forget the syntax
     Account user;
     int accountType; // Used to get account type after log-in for the switch case
     string accountID; // Used to get account ID after log-in, used to search subject 
@@ -36,15 +35,14 @@ int main() {
         cout << "[2] Exit Program" << endl;
         cout << "\nType your choice: ";
         switch(inputMenu(2)) {
-            case -1 : 
-                continue;
+            case -1: 
+                continue; // Loop Back
             case 1:
-                // Continue Program
+                // Continues Program
                 break;
             case 2:
                 cout << "\nExiting the program..." << endl;
                 return 0;
-                break;
         }
     
         clearScreen();
@@ -53,7 +51,7 @@ int main() {
         } else {
             switch (accountType) {
                 case 0:
-                    adminHandler(accountID);
+                    adminHandler();
                     break;
                 case 1:    
                     facultyHandler(accountID);
@@ -68,10 +66,7 @@ int main() {
     return 0;
 }
 
-void adminHandler(string accountID) {
-    cout << "Admin much wow" << endl;
-
-    // Add admin functionality here
+void adminHandler() {
     Admin admin;
     admin.menu();
 }
@@ -84,6 +79,4 @@ void facultyHandler(string accountID) {
 void studentHandler(string accountID) {
     Student student(accountID);
     student.menu();
-
-    // Add student functionality here
 }
