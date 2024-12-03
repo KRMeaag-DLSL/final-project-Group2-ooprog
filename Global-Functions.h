@@ -205,7 +205,7 @@ inline string inputDate(bool isAdding) {
                 break;
             case 4:
                 if (isAdding) {
-                    throw string("You are trying to set a deadline in the past. Please try again!");
+                    throw string("You are trying to set a date in the past. Please try again!");
                     break;
                 }
                 return input;

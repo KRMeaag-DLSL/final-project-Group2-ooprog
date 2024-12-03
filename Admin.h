@@ -17,6 +17,8 @@ class Admin : Account{
         string adminID;
 
     public:
+        Admin(string input) : adminID(input) {}
+
         void createStudentEntry() {
             clearScreen();
             string section, name, contact, address, emailAddress, department, tuitionDeadline;
@@ -114,7 +116,48 @@ class Admin : Account{
             return;
         }
 
-        void analytics() {}
+        void analytics() {
+            Database* db = Database::getInstance();
+            clearScreen();
+            int totalLates = 0;
+            int totalAbsent = 0;
+            float totalGradesIndividual = 0;
+            float totalAverageGrades = 0;
+
+
+            float avgGrade;
+
+            cout << "Total students enrolled in the student management system: " << db->getStudentEntries().size() << endl;
+            cout << "Total number of disciplinary offenses recorded: " << db->getRecords().size() << endl;
+
+            for (auto& attedance : db->getAttendance()) {
+                totalLates += attedance.getLates();
+                totalAbsent += attedance.getAbsents();
+            }
+
+            cout << "Average number of absences: " << totalAbsent / db->getAttendance().size() << endl;
+            cout << "Average number of late attendance: " << totalAbsent / db->getAttendance().size() << endl;
+
+            for (auto& grades : db->getGrades()) {
+                totalGradesIndividual += grades.getCLCE();
+                totalGradesIndividual += grades.getEnglish();
+                totalGradesIndividual += grades.getFilipino();
+                totalGradesIndividual += grades.getMAPEH();
+                totalGradesIndividual += grades.getSocStud();
+                totalGradesIndividual += grades.getScience();
+                totalGradesIndividual += grades.getTLE();
+                totalGradesIndividual += grades.getMath();
+
+                totalAverageGrades += totalGradesIndividual / 8;
+                totalGradesIndividual = 0;
+            }            
+
+            cout << "Average overall grade of the students: " << totalAverageGrades / db->getGrades().size() << endl;
+
+            cout << endl;
+            continueToNext();
+            return;
+        }
         
         void updateDisciplinaryRecords() {
             clearScreen();
@@ -294,7 +337,7 @@ class Admin : Account{
                 return;
             }
 
-            cout << "\nEntry found! Attendance records of student:" << attendance[keyDatabase].getStudentID() << endl;
+            cout << "\nEntry found! Attendance records of student: " << attendance[keyDatabase].getStudentID() << endl;
             cout << "Absents: " << attendance[keyDatabase].getAbsents() << endl;
             cout << "Lates: " << attendance[keyDatabase].getLates() << endl;
 
