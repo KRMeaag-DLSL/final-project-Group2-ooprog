@@ -185,5 +185,6 @@ void testIDSort() {
 }
 
 int main() {
+    cout << "Hello";
     testIDSort();
 }

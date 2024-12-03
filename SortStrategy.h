@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 #include "Database.h"
+#include <vector>
 
 using namespace std;
 
@@ -100,8 +100,8 @@ class SortContext {
         SortStrategy* strategy;
     
     public:
-        SortContext(SortStrategy* strategy) : strategy(strategy) {}
-
+        SortContext(SortStrategy* strat) : strategy(strat) {}
+        
         void setSortStrategy(SortStrategy* strat) {strategy = strat;}
 
         void sortData(vector<int>& data) {

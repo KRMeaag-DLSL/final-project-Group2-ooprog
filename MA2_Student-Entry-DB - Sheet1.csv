@@ -1,16 +1,16 @@
 Student-ID,Section,Name,Age,Contact,Address,Email Address,Department
-2022515689,BM105,Alice Johnson,20,123-456-7890,"123 Elm St Springfield",alice.johnson@email.com,GS
-2022394915,BM202,Ben Carter,22,987-654-3210,"456 Oak Rd Riverdale",ben.carter@email.com,JHS
-2020394453,CMR204,Clara Smith,19,555-123-4567,"789 Pine Ave Maple City",clara.smith@email.com,GS
-2024178625,CMR207,Daniel Brown,21,444-987-1234,"101 Birch Ln Hillside",daniel.brown@email.com,JHS
-2017566690,BM105,Emily Davis,20,333-456-7890,"202 Cedar St Lakeview",emily.davis@email.com,GS
-2020476627,BM202,Frank Wilson,23,222-789-4561,"303 Maple Dr Brookfield",frank.wilson@email.com,JHS
-2018650514,CMR204,Grace Lee,18,111-654-9872,"404 Walnut Way Fairmont",grace.lee@email.com,GS
-2024627458,CMR207,Henry Thomas,21,999-321-6540,"505 Ash St Clearwater",henry.thomas@email.com,JHS
-2024120883,BM105,Ivy Martinez,19,888-432-1098,"606 Cypress Rd Belmont",ivy.martinez@email.com,GS
-2021253392,BM202,Jack Robinson,22,777-890-1234,"707 Spruce Blvd Greendale",jack.robinson@email.com,JHS
-2022866480,CMR204,Kelly Anderson,20,123-678-4321,"808 Willow St Bayside",kelly.anderson@email.com,GS
-2017352377,CMR207,Leo Turner,22,876-543-2190,"909 Chestnut Ln Greenhill",leo.turner@email.com,JHS
-2021529203,BM105,Mia Perez,19,567-890-1234,"1010 Magnolia Ave Pinewood",mia.perez@email.com,GS
-2024129253,BM202,Noah Harris,21,432-109-8765,"1111 Aspen Dr Stonebridge",noah.harris@email.com,JHS
-2017639860,CMR204,Olivia White,20,654-321-0987,"1212 Dogwood Way Rivertown",olivia.white@email.com,GS
+2022515689,BM105,Alice Johnson,20,123-456-7890,Springfield,alice.johnson@email.com,GS
+2022394915,BM202,Ben Carter,22,987-654-3210,Riverdale,ben.carter@email.com,JHS
+2020394453,CMR204,Clara Smith,19,555-123-4567,Maple City,clara.smith@email.com,JHS
+2024178625,CMR207,Daniel Brown,21,444-987-1234,Akron,daniel.brown@email.com,GS
+2017566690,BM105,Emily Davis,20,333-456-7890,Lakeview,emily.davis@email.com,GS
+2020476627,BM202,Frank Wilson,23,222-789-4561,Brookfield,frank.wilson@email.com,JHS
+2018650514,CMR204,Grace Lee,18,111-654-9872,Fairmont,grace.lee@email.com,JHS
+2024627458,CMR207,Henry Thomas,21,999-321-6540,Clearwater,henry.thomas@email.com,GS
+2024120883,BM105,Ivy Martinez,19,888-432-1098,Belmont,ivy.martinez@email.com,GS
+2021253392,BM202,Jack Robinson,22,777-890-1234,Greendale,jack.robinson@email.com,JHS
+2022866480,CMR204,Kelly Anderson,20,123-678-4321,Bayside,kelly.anderson@email.com,JHS
+2017352377,CMR207,Leo Turner,22,876-543-2190,Greenhill,leo.turner@email.com,GS
+2021529203,BM105,Mia Perez,19,567-890-1234,Pinewood,mia.perez@email.com,GS
+2024129253,BM202,Noah Harris,21,432-109-8765,Stonebridge,noah.harris@email.com,JHS
+2017639860,CMR204,Olivia White,20,654-321-0987,Rivertown,olivia.white@email.com,JHS

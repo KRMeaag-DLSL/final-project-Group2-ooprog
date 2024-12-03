@@ -146,6 +146,39 @@ class Attendance {
         void setLates(int l) { lates = l;}
 };
 
+class TeacherInfo {
+private:
+    string facultyID;
+    string section;
+    string subject;
+
+public:
+    TeacherInfo(string id, string sec, string subj) : facultyID(id), section(sec), subject(subj) {}
+
+    TeacherInfo() {}
+
+    string getFacultyID() {
+        return facultyID;
+    }
+    void setFacultyID(string id) {
+        facultyID = id;
+    }
+
+    string getSection() {
+        return section;
+    }
+    void setSection(string sec) {
+        section = sec;
+    }
+
+    string getSubject() {
+        return subject;
+    }
+    void setSubject(string subj) {
+        subject = subj;
+    }
+};
+
 class Database {
     private:
         static Database* instance;
@@ -155,14 +188,16 @@ class Database {
         vector<Deadline> deadlines;
         vector<Attendance> attendance;
         vector<FinancialCommitment> financialCommitments;
+        vector<TeacherInfo> teacherInfo;
 
-        Database () { 
+        Database () {
             loadData("MA2_Student-Entry-DB - Sheet1.csv", 1);
             loadData("MA2_Records-DB - Sheet1.csv", 2);
             loadData("MA2_Deadlines-DB - Sheet1.csv", 3);
             loadData("MA2_GS-JHS-Grades-DB - Sheet1.csv", 4);
             loadData("MA2_Financial-Commitments-DB - Sheet1.csv", 5);
             loadData("MA2_Attendance-DB - Sheet1.csv", 6);
+            loadData("MA2_Teacher-Subject-DB - Sheet1.csv", 7);
 
             // delete this shit
             cout << "Total student entries loaded: " << studentEntries.size() << endl;
@@ -188,6 +223,7 @@ class Database {
         vector<Deadline>& getDeadlines() { return deadlines;}
         vector<Attendance>& getAttendance() { return attendance;}
         vector<FinancialCommitment>& getFinancialCommitments() { return financialCommitments;}
+        vector<TeacherInfo>& getTeacherInfo() { return teacherInfo;}
         void addStudentEntry(StudentEntry& entry) { studentEntries.push_back(entry);}
 
         void getRowFromFile(ifstream& fin, vector<string>& row, string line, string word) {
@@ -216,7 +252,9 @@ class Database {
             while (getline(fin, line)) {
                 getRowFromFile(fin, row, line, word);
 
-                int id = stoi(row[0]);
+                int id;
+                if (type != 7) {id = stoi(row[0]);}
+
                 // Add entry to the vector
                 switch (type) {
                     case 1: {
@@ -258,10 +296,15 @@ class Database {
                         attendance.push_back(Attendance(id, absents, lates));
                         break;
                     }
+                    case 7: {
+                        teacherInfo.push_back(TeacherInfo(row[0], row[1], row[2]));
+                        break;
+                    }
                 }
             }
             fin.close();
         }
+
 
         void saveData(string fileName, int type) {
             // File pointer
@@ -318,6 +361,13 @@ class Database {
                     fout << "Student-ID,Absents,Lates\n";
                     for (auto& attendance : attendance) {
                         fout << attendance.getStudentID() << "," << attendance.getAbsents() << "," << attendance.getLates() << "\n";
+                    }
+                    break;
+                }
+                case 7: {
+                    fout << "Faculty-ID,Section,Subject\n";
+                    for (auto& info : teacherInfo) {
+                        fout << info.getFacultyID() << "," << info.getSection() << "," << info.getSubject() << "\n";
                     }
                     break;
                 }

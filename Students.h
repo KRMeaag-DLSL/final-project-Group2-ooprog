@@ -33,17 +33,13 @@ class Student : public Account {
         return studentID;
     }
 
-    string getSection(){
-        return section;
-    }
+    
 
     void setStudentID(){
         this->studentID = studentID;
     }
 
-    void setSection(){
-        this->section = section;
-    }
+    
 
     void menu() override {
         int choice;
@@ -127,12 +123,12 @@ class Student : public Account {
     void displayStudentDeadlines(){
         clearScreen();
         Database* db = Database::getInstance();
-        auto& deadline = db->getDeadlines();
+        auto& deadlines = db->getDeadlines();
         bool foundEntry = false;
 
         cout << "Deadlines under your section " << section << ":\n";
        
-        for (auto& deadline : db->getDeadlines()) {
+        for (auto& deadline : deadlines) {
             if (deadline.getSection() == section) {
                 foundEntry = true;
                 cout << "Section: " << deadline.getSection() << "\n";
@@ -317,8 +313,6 @@ class Student : public Account {
 
                 cout << "Editing Student Information for Student ID " << studentID << ":\n";
 
-                
-               cout << "Editing student information for ID: " << studentID << endl;
 
             
             cout << "Enter new contact number (format XXX-XXX-XXXX) or press ENTER to skip: ";
@@ -345,13 +339,16 @@ class Student : public Account {
                 cout << "Contact number updated successfully!" << endl;
             }
 
-                cout << "Enter new address (leave blank to keep current): ";
-                getline(cin, newAddress);
-                if (!newAddress.empty()) {
-                    student.setAddress(newAddress);
-                    cout << "Address updated.\n";
-                }
-                
+                cout << "Enter new address(City) (leave blank to keep current): ";
+                    getline(cin, newAddress);
+
+                    if (!newAddress.empty()) {
+                        student.setAddress(newAddress);
+                        cout << "Address updated.\n";
+                    } else {
+                        cout << "No changes made for the address.\n";
+                    }
+
                 db->saveData("MA2_Student-Entry-DB - Sheet1.csv", 1);
 
                 cout << "Information successfully updated.\n";
